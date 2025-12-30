@@ -22,5 +22,5 @@ set(BLT_FLD [YOUR PATH HERE])
 ~~~
 #
 
-If anything doesn't work let me know, I'm pretty new with all this and woul love to know what broke.
+If anything doesn't work let me know, I'm pretty new with all this and would love to know what broke.
 

@@ -2,15 +2,12 @@
 #define GAMECONTEXT_H
 
 #include "Header Files/StateMachine.h"
-
-class GameContext
+#include <BearLibTerminal.h>
+struct GameContext
 {
-public:
-	StateMachine m_StateMachine;
-	
-	bool GameIsRunning = true;
+	StateMachine<GameContext> m_StateMachine;
 
-	bool IsInCombat = false;
+	bool GameIsRunning = true;
 };
 
 #endif

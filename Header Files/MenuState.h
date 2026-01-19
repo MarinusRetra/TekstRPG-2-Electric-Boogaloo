@@ -1,23 +1,22 @@
 #ifndef MENUSTATE_H
 #define MENUSTATE_H
 
-#include "Header Files/State.h"
+#include "Header Files/IState.h"
 #include "Header Files/GameContext.h"
-#include <BearLibTerminal.h>
 
-class MenuState : public State
+namespace states
 {
-public:
-	void Update(GameContext* p_gameContext) override
+	class MenuState : public IState<GameContext>
 	{
-		if (terminal_read() == TK_CLOSE) // Toggles the game loop when the window gets closed.
-		{
-			p_gameContext->GameIsRunning = false;
-		}
+	public:
+		void Enter(GameContext* p_gameContext) override;
+	
+		void Update(GameContext* p_gameContext) override;
+	
+		void Exit(GameContext* p_gameContext) override;
+	};
 
-		//Menu logic
-		terminal_refresh();
-	}
-};
+	static MenuState MenuStateInstance;
+}
 
 #endif 

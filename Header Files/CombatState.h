@@ -1,15 +1,21 @@
-#ifndef GAMESTATE_H
-#define GAMESTATE_H
+#ifndef COMBATSTATE_H
+#define COMBATSTATE_H
 
-#include "Header Files/State.h"
+#include "Header Files/IState.h"
 #include "Header Files/GameContext.h"
 
-class CombatState : public State
+namespace states
 {
-public:
-    void Update(GameContext* ctx) override
+    class CombatState : public IState<GameContext>
     {
+    public:
+        void Enter(GameContext* p_gameContext) override;
+    
+        void Update(GameContext* p_gameContext) override;
+    
+        void Exit(GameContext* p_gameContext) override;
+    };
 
-    }
-};
+    static CombatState CombatStateInstance;
+}
 #endif

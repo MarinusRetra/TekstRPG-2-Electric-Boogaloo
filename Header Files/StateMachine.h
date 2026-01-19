@@ -1,42 +1,47 @@
 #ifndef STATEMACHINE_H
 #define STATEMACHINE_H
-#include "Header Files/State.h"
+#include "Header Files/IState.h"
 
+template<typename ContextType>
 class StateMachine
 {
 public:
-	StateMachine()
+	void ChangeState(ContextType* p_context, IState<ContextType>* p_newState)
 	{
-		mp_currentState = nullptr;
-	}
+		if (p_newState == mp_currentState) return;
 
-	void changeState(GameContext* p_gameContext, State* p_newState)
-	{
 		// Before setting a new state clean up the existing one.
 		if (mp_currentState)
 		{
-			mp_currentState->Exit(p_gameContext);
-			delete mp_currentState;
+			mp_currentState->Exit(p_context);
 		}
 
-		// Set new state.
+		// Set and enter the new state.
+		mp_previousState = mp_currentState;
 		mp_currentState = p_newState;
 
 		if (mp_currentState)
 		{
-			mp_currentState->Enter(p_gameContext);
+			mp_currentState->Enter(p_context);
 		}
 	}
 
-	void Update(GameContext* p_gameContext)
+	void Update(ContextType* p_context)
 	{
-		if (mp_currentState) // Only update if there actually is a state.
+		if (mp_currentState)
 		{
-			mp_currentState->Update(p_gameContext);
+			mp_currentState->Update(p_context);
 		}
 	}
+	// Don't use this for calling functions, just use this as read only.
+	IState<ContextType>* GetPreviousState() const 
+	{
+		return mp_previousState;
+	}
+
 private:
-	State* mp_currentState;
+	IState<ContextType>* mp_currentState = nullptr;
+	IState<ContextType>* mp_previousState = nullptr;
 };
 
 #endif

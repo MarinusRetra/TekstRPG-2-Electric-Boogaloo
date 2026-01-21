@@ -1,29 +1,79 @@
 #include "Header Files/MenuState.h"
-#include "Header Files/CombatState.h"
+#include "Header Files/SettingsState.h"
 #include <BearLibTerminal.h>
 #include <string>
+#include "Header Files/BigString.h"
 
 namespace states
 {
+	enum MainMenuChoices{ PLAY, SETTINGS, THEMES, QUIT, NUM_CHOICHES };
+
+	std::string choiceArray[NUM_CHOICHES] = { "Play","Settings","Themes","Quit" };
+	
 	void MenuState::Enter(GameContext* p_gameContext)
 	{
-		terminal_clear();
-		terminal_print(1, 1, std::to_string(4).c_str()); // BearLibTerminal is a C library so I need to convert the int to a C++ string to then convert it to a C-style string.
-		terminal_refresh();
-		p_gameContext->m_StateMachine.ChangeState(p_gameContext, &states::CombatStateInstance);
+		terminal_set("input.filter = [up, down, return, escape]"); 
 	}
-
+	
 	void MenuState::Update(GameContext* p_gameContext)
 	{
-		if (terminal_read() == TK_CLOSE) // Toggles the game loop when the window gets closed.
-		{
-			p_gameContext->GameIsRunning = false;
-		}
-	}
+		terminal_refresh();
 
+		p_gameContext->PrintBorder(0x2588, '#', terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
+		PrintMainMenu();
+
+	    p_gameContext->key = terminal_read();
+		p_gameContext->CheckGameClose();
+
+		if (p_gameContext->key == TK_RETURN)
+		{
+			switch (p_gameContext->selection)
+			{
+			case PLAY:
+				
+				break;
+
+			case SETTINGS:
+				SettingsStateInstance.SetSettingsMode(0);
+				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &SettingsStateInstance);
+				break;
+
+			case THEMES:
+				SettingsStateInstance.SetSettingsMode(1);
+				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &SettingsStateInstance);
+				break;
+
+			case QUIT:
+				p_gameContext->GameIsRunning = false;
+				break;
+
+			default:
+				terminal_print_ext(1, 30, 237, 10, TK_ALIGN_CENTER, "If you are reading this I messed up :)\nYou are selecting a choice that does not exist.");
+				break;
+			}
+		}
+
+		p_gameContext->selection += (p_gameContext->key == TK_UP) ? -1 : 1;
+		p_gameContext->selection = (p_gameContext->selection < 0) ? 0 : (p_gameContext->selection > NUM_CHOICHES-1) ? NUM_CHOICHES-1 : p_gameContext->selection;
+
+		terminal_clear_area(1, 8, 237, 1);
+		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, (choiceArray[p_gameContext->selection]).c_str());
+	}
+	
 	void MenuState::Exit(GameContext* p_gameContext)
 	{
-		//terminal_clear();
+		terminal_clear();
+	}
+
+	void MenuState::PrintMainMenu()
+	{	
+		for (int i = 0; i < NUM_CHOICHES; i++)
+		{
+			terminal_print_ext(1, i+2, 237,10,TK_ALIGN_CENTER, choiceArray[i].c_str());
+		}
+
+		terminal_print_ext(1, 45, 237, 10, TK_ALIGN_CENTER, "Press 'escape' to instantly quit the game at anytime :D");
+
 		terminal_refresh();
 	}
 }

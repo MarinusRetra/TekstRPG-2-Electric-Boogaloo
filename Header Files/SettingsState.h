@@ -24,6 +24,7 @@ namespace states
 		void PrintMainSettingsMenu();
 		void PrintThemesMenu();
 		void PrintIngameMenu();
+		void LoadSettings();
 	};
 
 	static SettingsState SettingsStateInstance;

@@ -8,9 +8,8 @@ struct GameContext
 	StateMachine<GameContext> m_StateMachine;
 
 	bool GameIsRunning = true;
-	int selection = -1;
+	int selection = 0;
 	int key;
-
 
 	/// <summary>
 	/// Sets the border text of the console based on the current theme.

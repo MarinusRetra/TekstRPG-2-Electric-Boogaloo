@@ -8,7 +8,7 @@ namespace states
 {
 	enum MainMenuChoices{ PLAY, SETTINGS, THEMES, QUIT, NUM_CHOICHES };
 
-	std::string choiceArray[NUM_CHOICHES] = { "Play","Settings","Themes","Quit" };
+	std::string mainMenuChoiceArray[NUM_CHOICHES] = { "Play","Settings","Themes","Quit" };
 	
 	void MenuState::Enter(GameContext* p_gameContext)
 	{
@@ -20,6 +20,8 @@ namespace states
 		terminal_refresh();
 
 		p_gameContext->PrintBorder(0x2588, '#', terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
+		terminal_clear_area(1, 8, 237, 1);
+		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, (mainMenuChoiceArray[p_gameContext->selection]).c_str());
 		PrintMainMenu();
 
 	    p_gameContext->key = terminal_read();
@@ -36,15 +38,18 @@ namespace states
 			case SETTINGS:
 				SettingsStateInstance.SetSettingsMode(0);
 				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &SettingsStateInstance);
+				return;
 				break;
 
 			case THEMES:
 				SettingsStateInstance.SetSettingsMode(1);
 				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &SettingsStateInstance);
+				return;
 				break;
 
 			case QUIT:
 				p_gameContext->GameIsRunning = false;
+				return;
 				break;
 
 			default:
@@ -57,11 +62,12 @@ namespace states
 		p_gameContext->selection = (p_gameContext->selection < 0) ? 0 : (p_gameContext->selection > NUM_CHOICHES-1) ? NUM_CHOICHES-1 : p_gameContext->selection;
 
 		terminal_clear_area(1, 8, 237, 1);
-		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, (choiceArray[p_gameContext->selection]).c_str());
+		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, (mainMenuChoiceArray[p_gameContext->selection]).c_str());
 	}
 	
 	void MenuState::Exit(GameContext* p_gameContext)
 	{
+		p_gameContext->selection = 0;
 		terminal_clear();
 	}
 
@@ -69,7 +75,7 @@ namespace states
 	{	
 		for (int i = 0; i < NUM_CHOICHES; i++)
 		{
-			terminal_print_ext(1, i+2, 237,10,TK_ALIGN_CENTER, choiceArray[i].c_str());
+			terminal_print_ext(1, i+2, 237,10,TK_ALIGN_CENTER, mainMenuChoiceArray[i].c_str());
 		}
 
 		terminal_print_ext(1, 45, 237, 10, TK_ALIGN_CENTER, "Press 'escape' to instantly quit the game at anytime :D");

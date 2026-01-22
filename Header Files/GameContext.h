@@ -3,13 +3,26 @@
 
 #include "Header Files/StateMachine.h"
 #include <BearLibTerminal.h>
-struct GameContext
+#include "Themes.h"
+
+class GameContext 
 {
+public:
 	StateMachine<GameContext> m_StateMachine;
 
 	bool GameIsRunning = true;
-	int selection = 0;
-	int key;
+	int Selection = 0;
+	int Key = 0;
+
+	themes::Theme CurrentTheme;
+
+	void SetTheme(color_t textColor, color_t backgroundColor, int BorderSymbol1, int BorderSymbol2)
+	{
+		terminal_color(textColor);
+		terminal_bkcolor(backgroundColor);
+		PrintBorder(BorderSymbol1, BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
+		terminal_refresh();
+	}
 
 	/// <summary>
 	/// Sets the border text of the console based on the current theme.
@@ -33,7 +46,7 @@ struct GameContext
 
 	void CheckGameClose()
 	{
-		if (key == TK_CLOSE || key == TK_ESCAPE) // Toggles the game loop when the window gets closed or when escape is pressed.
+		if (Key == TK_CLOSE || Key == TK_ESCAPE) // Toggles the game loop when the window gets closed or when escape is pressed.
 		{
 			GameIsRunning = false;
 		}

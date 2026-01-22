@@ -2,6 +2,7 @@
 #include "Header Files/GameContext.h"
 #include "Header Files/EnemyContext.h"
 #include "Header Files/MenuState.h"
+#include "Header Files/Themes.h"
 
 using namespace std;
 
@@ -12,8 +13,7 @@ int main() {
 
     terminal_open();
 
-    terminal_color(0xffcccccc);
-    terminal_bkcolor(0xff222222);
+    GameContext.SetTheme(GameContext.CurrentTheme.TextColor, GameContext.CurrentTheme.BackgroundColor , GameContext.CurrentTheme.BorderSymbol1 , GameContext.CurrentTheme.BorderSymbol2);
 
     if (!terminal_set("window: title='Game', size=240x66, fullscreen=true, cellsize='auto';")) // TEMP: I'm just closing the terminal when configuring fails so I can debug properly.
     {

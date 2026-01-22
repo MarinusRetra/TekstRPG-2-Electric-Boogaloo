@@ -14,16 +14,16 @@ namespace states
 		void Update(GameContext* p_gameContext) override;
 
 		void Exit(GameContext* p_gameContext) override;
+
 		/// <summary>
 		/// Decides what settings will be opened
-		/// 0 = MAINSETTINGS, 1 = THEMES, 2 = INGAME 
+		/// 0 = MAINSETTINGS, 1 = THEMES
 		/// </summary>
 		/// <param name="mode"> </param>
 		void SetSettingsMode(int mode);
 	private:
 		void PrintMainSettingsMenu();
 		void PrintThemesMenu();
-		void PrintIngameMenu();
 		void LoadSettings();
 	};
 

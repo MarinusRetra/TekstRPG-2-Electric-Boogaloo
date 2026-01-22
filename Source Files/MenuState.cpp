@@ -19,17 +19,17 @@ namespace states
 	{
 		terminal_refresh();
 
-		p_gameContext->PrintBorder(0x2588, '#', terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
+		p_gameContext->PrintBorder(p_gameContext->CurrentTheme.BorderSymbol1, p_gameContext->CurrentTheme.BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
 		terminal_clear_area(1, 8, 237, 1);
-		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, (mainMenuChoiceArray[p_gameContext->selection]).c_str());
+		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, (mainMenuChoiceArray[p_gameContext->Selection]).c_str());
 		PrintMainMenu();
 
-	    p_gameContext->key = terminal_read();
+	    p_gameContext->Key = terminal_read();
 		p_gameContext->CheckGameClose();
 
-		if (p_gameContext->key == TK_RETURN)
+		if (p_gameContext->Key == TK_RETURN)
 		{
-			switch (p_gameContext->selection)
+			switch (p_gameContext->Selection)
 			{
 			case PLAY:
 				
@@ -58,16 +58,16 @@ namespace states
 			}
 		}
 
-		p_gameContext->selection += (p_gameContext->key == TK_UP) ? -1 : 1;
-		p_gameContext->selection = (p_gameContext->selection < 0) ? 0 : (p_gameContext->selection > NUM_CHOICHES-1) ? NUM_CHOICHES-1 : p_gameContext->selection;
+		p_gameContext->Selection += (p_gameContext->Key == TK_UP) ? -1 : 1;
+		p_gameContext->Selection = (p_gameContext->Selection < 0) ? 0 : (p_gameContext->Selection > NUM_CHOICHES-1) ? NUM_CHOICHES-1 : p_gameContext->Selection;
 
 		terminal_clear_area(1, 8, 237, 1);
-		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, (mainMenuChoiceArray[p_gameContext->selection]).c_str());
+		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, (mainMenuChoiceArray[p_gameContext->Selection]).c_str());
 	}
 	
 	void MenuState::Exit(GameContext* p_gameContext)
 	{
-		p_gameContext->selection = 0;
+		p_gameContext->Selection = 0;
 		terminal_clear();
 	}
 
@@ -77,9 +77,7 @@ namespace states
 		{
 			terminal_print_ext(1, i+2, 237,10,TK_ALIGN_CENTER, mainMenuChoiceArray[i].c_str());
 		}
-
 		terminal_print_ext(1, 45, 237, 10, TK_ALIGN_CENTER, "Press 'escape' to instantly quit the game at anytime :D");
-
 		terminal_refresh();
 	}
 }

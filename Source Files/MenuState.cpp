@@ -1,5 +1,6 @@
 #include "Header Files/MenuState.h"
 #include "Header Files/SettingsState.h"
+#include "Header Files/SetThemeState.h"
 #include <BearLibTerminal.h>
 #include <string>
 #include "Header Files/BigString.h"
@@ -36,14 +37,12 @@ namespace states
 				break;
 
 			case SETTINGS:
-				SettingsStateInstance.SetSettingsMode(0);
 				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &SettingsStateInstance);
 				return;
 				break;
 
 			case THEMES:
-				SettingsStateInstance.SetSettingsMode(1);
-				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &SettingsStateInstance);
+				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &SetThemeStateInstance);
 				return;
 				break;
 

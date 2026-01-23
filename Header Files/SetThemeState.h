@@ -1,12 +1,12 @@
-#ifndef SETTINGSSTATE_H
-#define SETTINGSSTATE_H
+#ifndef SETTHEMSTATE_H
+#define SETTHEMSTATE_H
 
 #include "Header Files/IState.h"
 #include "Header Files/GameContext.h"
 
 namespace states
 {
-	class SettingsState : public IState<GameContext>
+	class SetThemeState : public IState<GameContext>
 	{
 	public:
 		void Enter(GameContext* p_gameContext) override;
@@ -18,7 +18,8 @@ namespace states
 		void PrintMenu();
 	};
 
-	static SettingsState SettingsStateInstance;
+	static SetThemeState SetThemeStateInstance;
 }
+
 
 #endif 

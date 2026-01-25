@@ -24,6 +24,7 @@ namespace states
 		terminal_clear_area(1, 8, 237, 1);
 		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, (mainMenuChoiceArray[p_gameContext->Selection]).c_str());
 		PrintMainMenu();
+		terminal_refresh();
 
 	    p_gameContext->Key = terminal_read();
 		p_gameContext->CheckGameClose();
@@ -38,30 +39,25 @@ namespace states
 
 			case SETTINGS:
 				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &SettingsStateInstance);
-				return;
 				break;
 
 			case THEMES:
 				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &SetThemeStateInstance);
-				return;
 				break;
 
 			case QUIT:
 				p_gameContext->GameIsRunning = false;
-				return;
 				break;
 
 			default:
 				terminal_print_ext(1, 30, 237, 10, TK_ALIGN_CENTER, "If you are reading this I messed up :)\nYou are selecting a choice that does not exist.");
 				break;
 			}
+			return;
 		}
 
 		p_gameContext->Selection += (p_gameContext->Key == TK_UP) ? -1 : 1;
 		p_gameContext->Selection = (p_gameContext->Selection < 0) ? 0 : (p_gameContext->Selection > NUM_CHOICHES-1) ? NUM_CHOICHES-1 : p_gameContext->Selection;
-
-		terminal_clear_area(1, 8, 237, 1);
-		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, (mainMenuChoiceArray[p_gameContext->Selection]).c_str());
 	}
 	
 	void MenuState::Exit(GameContext* p_gameContext)
@@ -77,7 +73,6 @@ namespace states
 			terminal_print_ext(1, i+2, 237,10,TK_ALIGN_CENTER, mainMenuChoiceArray[i].c_str());
 		}
 		terminal_print_ext(1, 45, 237, 10, TK_ALIGN_CENTER, "Press 'escape' to instantly quit the game at anytime :D");
-		terminal_refresh();
 	}
 }
 

@@ -17,11 +17,10 @@ namespace states
 	void SetThemeState::Update(GameContext* p_gameContext)
 	{
 		p_gameContext->PrintBorder(p_gameContext->CurrentTheme.BorderSymbol1, p_gameContext->CurrentTheme.BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
-
-		terminal_clear_area(1, 8, 237, 1);
-		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, themesArray[p_gameContext->Selection].c_str());
-
+		terminal_clear_area(1, NUM_THEMES+3, 237, 1);
+		terminal_print_ext(1, NUM_THEMES+3, 237, 10, TK_ALIGN_CENTER, themesArray[p_gameContext->Selection].c_str());
 		PrintMenu();
+		terminal_refresh();
 
 		p_gameContext->Key = terminal_read();
 		p_gameContext->CheckGameClose();
@@ -56,22 +55,16 @@ namespace states
 
 			default:
 				terminal_print_ext(1, 30, 237, 10, TK_ALIGN_CENTER, "If you are reading this I messed up :)\nYou are selecting a choice that does not exist.");
-				return;
 				break;
 			}
-			PrintMenu();
 			p_gameContext->SetTheme(p_gameContext->CurrentTheme.TextColor, p_gameContext->CurrentTheme.BackgroundColor, p_gameContext->CurrentTheme.BorderSymbol1, p_gameContext->CurrentTheme.BorderSymbol2);
 			terminal_clear();
 			return;
 		}
 
 		p_gameContext->Selection += (p_gameContext->Key == TK_UP) ? -1 : 1;
-
 		// Keeps the selection in range.
 		p_gameContext->Selection = (p_gameContext->Selection < 0) ? 0 : (p_gameContext->Selection > NUM_THEMES - 1) ? (NUM_THEMES) - 1 : p_gameContext->Selection;
-
-		terminal_clear_area(1, 8, 237, 1);
-		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, themesArray[p_gameContext->Selection].c_str());
 	}
 
 	void SetThemeState::Exit(GameContext* p_gameContext)

@@ -3,6 +3,7 @@
 #include "Header Files/EnemyContext.h"
 #include "Header Files/MenuState.h"
 #include "Header Files/Themes.h"
+#include "Header Files/SettingData.h"
 
 using namespace std;
 
@@ -10,6 +11,11 @@ int main() {
 
     EnemyContext EnemyContext; // Will probably move this somewhere else later.
     GameContext GameContext;
+    
+    if (!gamedata::SettingsDataInstance.LoadFromFile("settings.txt"))
+    {
+        gamedata::SettingsDataInstance.SaveToFile("settings.txt");
+    }
 
     terminal_open();
 

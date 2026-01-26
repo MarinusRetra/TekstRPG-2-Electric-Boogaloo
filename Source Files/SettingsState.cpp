@@ -35,10 +35,12 @@ namespace states
 
 		_selectedSlider.value += (p_gameContext->Key == TK_LEFT) ? -1 : (p_gameContext->Key == TK_RIGHT) ? 1 : 0;
 		_selectedSlider.value = (_selectedSlider.value < _selectedSlider.min) ? _selectedSlider.min : (_selectedSlider.value > (_selectedSlider.max) ? (_selectedSlider.max) : _selectedSlider.value);
+
 	}
 
 	void SettingsState::Exit(GameContext* p_gameContext)
 	{
+		gamedata::SettingsDataInstance.SaveToFile("settings.txt");
 		p_gameContext->Selection = 0;
 		terminal_clear();
 	}

@@ -2,6 +2,7 @@
 #define SETTINGDATA_H
 
 #include <string>
+#include <fstream>
 
 namespace gamedata
 {
@@ -16,21 +17,21 @@ namespace gamedata
 		std::string GetAndUpdateSetting()
 		{
 			std::string sliderVisual = "";
-			
+
 			for (int i = name.size(); i < (max); i++) // This is so that all the sliders always line up without me needing to make every name the same lenght.
 			{
 				sliderVisual += " ";
 			}
-			
+
 			sliderVisual += "[[";
 
 			for (int i = 0; i < max; i++)
 			{
-				if (i < value) 
+				if (i < value)
 				{
 					sliderVisual += "▋";
-				} 
-				else 
+				}
+				else
 				{
 					sliderVisual += " ";
 				}
@@ -40,28 +41,20 @@ namespace gamedata
 		}
 	};
 
-	static class SettingsData
+	class SettingsData
 	{
 	private:
-		Slider SettingsArray[NUM_MAIN_SETTINGS] = {
-		{ "SFX", 5, 10, 0 },
-		{ "Music", 5, 10, 0 },
-		{ "Menu_Sound", 5, 10, 0 },
-		{ "Back", 0, 10, 0 },
-	};
+		Slider SettingsArray[NUM_MAIN_SETTINGS];
 
 	public:
-		/// <summary>
-		/// The int passed in is used to grab a reference of the Slider object equal to what setting is listed in SettingsMenuChoiches.
-		/// </summary>
-		/// <param name="0 = Game_SFX_Volume, 1 = Music, 2 = Menu_Sounds, 3 = BACK(Don't edit settings on this option)"></param>
-		/// <returns></returns>
-		Slider& GetSelectedSlider(int choiceIn)
-		{
-			return SettingsArray[choiceIn];
-		}
+		SettingsData();
+
+		Slider& GetSelectedSlider(int choiceIn);
+		bool SaveToFile(const std::string& filename);
+		bool LoadFromFile(const std::string& filename);
 	};
-	static SettingsData SettingsDataInstance;
+
+	extern SettingsData SettingsDataInstance;
 }
 
 #endif

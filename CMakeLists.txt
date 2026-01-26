@@ -9,7 +9,7 @@ file(GLOB_RECURSE PROJECT_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Header Files/*.h"
 )
 
-set(BLT_FLD ../Librarby/BearLibTerminal_0.15.8)
+set(BLT_FLD ../BearLibTerminal_0.15.8)
 message("BearLibTerminal Folder: ${BLT_FLD}")
 
 find_library(BLT_LIB

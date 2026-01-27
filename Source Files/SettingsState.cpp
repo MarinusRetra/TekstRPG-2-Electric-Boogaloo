@@ -14,7 +14,7 @@ namespace states
 	{
 		gamedata::Slider& _selectedSlider = gamedata::SettingsDataInstance.GetSelectedSlider(p_gameContext->Selection);
 
-		p_gameContext->PrintBorder(p_gameContext->CurrentTheme.BorderSymbol1, p_gameContext->CurrentTheme.BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
+		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
 		terminal_clear_area(1, 8, 237, 2); // Clears the selection text.
 		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, _selectedSlider.name.c_str());
 		terminal_print_ext(1, 9, 237, 10, TK_ALIGN_CENTER,  (_selectedSlider.value == 0) ? "" : std::to_string(_selectedSlider.value).c_str());
@@ -35,7 +35,6 @@ namespace states
 
 		_selectedSlider.value += (p_gameContext->Key == TK_LEFT) ? -1 : (p_gameContext->Key == TK_RIGHT) ? 1 : 0;
 		_selectedSlider.value = (_selectedSlider.value < _selectedSlider.min) ? _selectedSlider.min : (_selectedSlider.value > (_selectedSlider.max) ? (_selectedSlider.max) : _selectedSlider.value);
-
 	}
 
 	void SettingsState::Exit(GameContext* p_gameContext)

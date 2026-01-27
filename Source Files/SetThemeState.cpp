@@ -1,6 +1,7 @@
 #include "Header Files/SetThemeState.h"
 #include <string>
 #include "Header Files/Themes.h"
+#include "Header Files/SettingData.h"
 #include <BearLibTerminal.h>
 
 namespace states
@@ -16,7 +17,7 @@ namespace states
 
 	void SetThemeState::Update(GameContext* p_gameContext)
 	{
-		p_gameContext->PrintBorder(p_gameContext->CurrentTheme.BorderSymbol1, p_gameContext->CurrentTheme.BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
+		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
 		terminal_clear_area(1, NUM_THEMES+3, 237, 1);
 		terminal_print_ext(1, NUM_THEMES+3, 237, 10, TK_ALIGN_CENTER, themesArray[p_gameContext->Selection].c_str());
 		PrintMenu();
@@ -27,37 +28,18 @@ namespace states
 
 		if (p_gameContext->Key == TK_RETURN)
 		{
-			switch (p_gameContext->Selection) {
-			case BRIGHT:
-				p_gameContext->CurrentTheme = themes::EveryTheme.BrightTheme;
-				break;
-
-			case DARK:
-				p_gameContext->CurrentTheme = themes::EveryTheme.DarkTheme;
-				break;
-
-			case DEFAULT:
-				p_gameContext->CurrentTheme = themes::EveryTheme.DefaultTheme;
-				break;
-
-			case ROCK:
-				p_gameContext->CurrentTheme = themes::EveryTheme.RockTheme;
-				break;
-
-			case GRASS:
-				p_gameContext->CurrentTheme = themes::EveryTheme.GrassTheme;
-				break;
-
+			switch (p_gameContext->Selection) 
+			{
 			case BACK_TO_MAIN:
 				p_gameContext->m_StateMachine.ChangeState(p_gameContext, p_gameContext->m_StateMachine.GetPreviousState());
 				return;
 				break;
 
 			default:
-				terminal_print_ext(1, 30, 237, 10, TK_ALIGN_CENTER, "If you are reading this I messed up :)\nYou are selecting a choice that does not exist.");
+				p_gameContext->GetCurrentTheme() = themes::ThemesInstance.ThemesArray[p_gameContext->Selection];
 				break;
 			}
-			p_gameContext->SetTheme(p_gameContext->CurrentTheme.TextColor, p_gameContext->CurrentTheme.BackgroundColor, p_gameContext->CurrentTheme.BorderSymbol1, p_gameContext->CurrentTheme.BorderSymbol2);
+			p_gameContext->SetTheme(p_gameContext->GetCurrentTheme().TextColor, p_gameContext->GetCurrentTheme().BackgroundColor, p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2);
 			terminal_clear();
 			return;
 		}
@@ -69,6 +51,7 @@ namespace states
 
 	void SetThemeState::Exit(GameContext* p_gameContext)
 	{
+		gamedata::SettingsDataInstance.SaveToFile("settings.txt");
 		p_gameContext->Selection = 0;
 		terminal_clear();
 	}

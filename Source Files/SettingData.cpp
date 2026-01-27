@@ -30,11 +30,12 @@ namespace gamedata
 		{
 			return false;
 		}
-
+		 
 		for (int i = 0; i < NUM_MAIN_SETTINGS; i++)
 		{
 			file << SettingsArray[i].name << " " << SettingsArray[i].value << "\n";
 		}
+		file << themes::CurrentTheme.name << "\n";
 
 		return true;
 	}
@@ -50,14 +51,8 @@ namespace gamedata
 		std::string name;
 		int value;
 
-		while (true) // While the file can read in the order of "string" then integer.
+		while (file >> name >> value) // While the file can read in the order of "string" then integer.
 		{
-			file >> name >> value;
-			if (file.fail())
-			{
-				break;
-			}
-
 			for (int i = 0; i < NUM_MAIN_SETTINGS; i++)
 			{
 				if (SettingsArray[i].name == name)
@@ -65,6 +60,18 @@ namespace gamedata
 					SettingsArray[i].value = value;
 					break;
 				}
+			}
+		}
+		// This works because the while loop fails when it can't read a newline with in the order string,int.
+		// It fails when it reads the line with the theme on it, because it's just a single string followed up by nothing.
+		// But when it fails it still assigns the name variable to the saved theme.  
+		// || The comment is long but no one would otherwise be able to easily infer as to why this even works.
+		for (int i = 0; i < themes::NUM_THEMES; i++) 
+		{
+			if (themes::ThemesInstance.ThemesArray[i].name == name) // If the name being read is a name of an existing theme set the current theme to that theme.
+			{
+				themes::CurrentTheme = themes::ThemesInstance.ThemesArray[i];
+				break;
 			}
 		}
 

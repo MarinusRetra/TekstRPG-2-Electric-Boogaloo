@@ -12,21 +12,20 @@ int main() {
     EnemyContext EnemyContext; // Will probably move this somewhere else later.
     GameContext GameContext;
     
-    if (!gamedata::SettingsDataInstance.LoadFromFile("settings.txt"))
-    {
-        gamedata::SettingsDataInstance.SaveToFile("settings.txt");
-    }
-
     terminal_open();
-
-    GameContext.SetTheme(GameContext.CurrentTheme.TextColor, GameContext.CurrentTheme.BackgroundColor , GameContext.CurrentTheme.BorderSymbol1 , GameContext.CurrentTheme.BorderSymbol2);
-
     if (!terminal_set("window: title='Game', size=240x66, fullscreen=true, cellsize='auto';")) // TEMP: I'm just closing the terminal when configuring fails so I can debug properly.
     {
         terminal_close(); //TODO: Change this to inform the user the configurations have failed.
     }
 
-    terminal_clear();
+    if (!gamedata::SettingsDataInstance.LoadFromFile("settings.txt"))
+    {
+        gamedata::SettingsDataInstance.SaveToFile("settings.txt");
+    }
+    
+    GameContext.SetTheme(GameContext.GetCurrentTheme().TextColor, GameContext.GetCurrentTheme().BackgroundColor, GameContext.GetCurrentTheme().BorderSymbol1, GameContext.GetCurrentTheme().BorderSymbol2);
+    terminal_print_ext(1, 15, 237, 10, TK_ALIGN_CENTER, GameContext.GetCurrentTheme().name.c_str());
+
     GameContext.m_StateMachine.ChangeState(&GameContext, &states::MenuStateInstance);
 
     // Loops until the game toggles off.

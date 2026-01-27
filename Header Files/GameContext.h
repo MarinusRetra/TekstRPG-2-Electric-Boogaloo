@@ -14,12 +14,18 @@ public:
 	int Selection = 0;
 	int Key = 0;
 
-	themes::Theme CurrentTheme;
+	// This is so i don't have to include gamecontext when i want to get current theme and so I don't need themes when I already have gamecontext.
+	themes::Theme& GetCurrentTheme()
+	{
+		return themes::CurrentTheme;
+	}
 
+	//Sets the theme, reprints the border and refreshes the terminal.
 	void SetTheme(color_t textColor, color_t backgroundColor, int BorderSymbol1, int BorderSymbol2)
 	{
 		terminal_color(textColor);
 		terminal_bkcolor(backgroundColor);
+		terminal_clear();
 		PrintBorder(BorderSymbol1, BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
 		terminal_refresh();
 	}

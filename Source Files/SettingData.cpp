@@ -21,8 +21,6 @@ namespace gamedata
 		return SettingsArray[choiceIn];
 	}
 
-	//TODO: Print an error ingame when saving or loading fails.
-
 	bool SettingsData::SaveToFile(const std::string& filename)
 	{
 		std::ofstream file(filename);

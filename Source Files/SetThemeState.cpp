@@ -37,10 +37,10 @@ namespace states
 
 			default:
 				p_gameContext->GetCurrentTheme() = themes::ThemesInstance.ThemesArray[p_gameContext->Selection];
+				p_gameContext->SetTheme(p_gameContext->GetCurrentTheme().TextColor, p_gameContext->GetCurrentTheme().BackgroundColor, p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2);
+				terminal_clear();
 				break;
 			}
-			p_gameContext->SetTheme(p_gameContext->GetCurrentTheme().TextColor, p_gameContext->GetCurrentTheme().BackgroundColor, p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2);
-			terminal_clear();
 			return;
 		}
 

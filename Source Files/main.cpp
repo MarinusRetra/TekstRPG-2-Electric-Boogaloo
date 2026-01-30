@@ -4,6 +4,7 @@
 #include "Header Files/MenuState.h"
 #include "Header Files/Themes.h"
 #include "Header Files/SettingData.h"
+#include <iostream>
 
 using namespace std;
 
@@ -13,13 +14,16 @@ int main() {
     GameContext GameContext;
     
     terminal_open();
-    if (!terminal_set("window: title='Game', size=240x66, fullscreen=true, cellsize='auto';")) // TEMP: I'm just closing the terminal when configuring fails so I can debug properly.
+    if (!terminal_set("window: title='Game', size=240x66, fullscreen=true, cellsize='auto';")) // TODO: Take this out when the game is done.
     {
-        terminal_close(); //TODO: Change this to inform the user the configurations have failed.
+        terminal_close();
+        cout << "The game failed to set the configuration of BearLibTerminal";
+        return -1;
     }
 
     if (!gamedata::SettingsDataInstance.LoadFromFile("settings.txt"))
     {
+        cout << "Loading settings failed creating new settings.txt\n\n";
         gamedata::SettingsDataInstance.SaveToFile("settings.txt");
     }
     

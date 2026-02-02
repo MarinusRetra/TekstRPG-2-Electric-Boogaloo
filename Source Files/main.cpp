@@ -12,14 +12,7 @@ int main() {
 
     EnemyContext EnemyContext; // Will probably move this somewhere else later.
     GameContext GameContext;
-    
     terminal_open();
-    if (!terminal_set("window: title='Game', size=240x66, fullscreen=true, cellsize='auto';")) // TODO: Take this out when the game is done.
-    {
-        terminal_close();
-        cout << "The game failed to set the configuration of BearLibTerminal";
-        return -1;
-    }
 
     if (!gamedata::SettingsDataInstance.LoadFromFile("settings.txt"))
     {

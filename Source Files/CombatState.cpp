@@ -12,6 +12,7 @@ namespace states
     
     void CombatState::Update(GameContext* p_gameContext)
     {
+        terminal_clear();
         terminal_refresh();
     }
     

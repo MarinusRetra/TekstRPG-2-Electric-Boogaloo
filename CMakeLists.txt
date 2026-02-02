@@ -9,6 +9,7 @@ file(GLOB_RECURSE PROJECT_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Header Files/*.h"
 )
 
+#Add BearLibTerminal
 set(BLT_FLD ../Librarby/BearLibTerminal_0.15.8)
 message("BearLibTerminal Folder: ${BLT_FLD}")
 
@@ -16,37 +17,50 @@ find_library(BLT_LIB
     NAMES BearLibTerminal.lib
     PATHS ${BLT_FLD}/Windows64
 )
-
 message("BearLibTerminal Library: ${BLT_LIB}")
 
 find_path(BLT_HEADER
     NAMES BearLibTerminal.h
     PATHS ${BLT_FLD}/Include/C
 )
-
 message("BearLibTerminal Header: ${BLT_HEADER}")
 
 find_path(BLT_BIN
     NAMES BearLibTerminal.dll
     PATHS ${BLT_FLD}/Windows64
 )
-
 message("BearLibTerminal Binary: ${BLT_BIN}")
+
+
+
+#Add REXSpeeder
+set(REX_FLD ../Librarby/REXSpeeder)
+message("REXSpeeder Folder: ${REX_FLD}")
+
+find_library(REX_LIB
+    NAMES rexspeeder.lib
+    PATHS ${REX_FLD}/build/Debug
+)
+message("REXSpeeder Library: ${REX_LIB}")
+
+find_path(REX_HEADER
+    NAMES REXSpeeder.h
+    PATHS ${REX_FLD}/include
+)
+message("REXSpeeder Header: ${REX_HEADER}")
 
 add_executable(${PROJECT_NAME}
     ${PROJECT_SOURCES}
     ${PROJECT_HEADERS}
 )
 
-add_subdirectory(../Librarby/REXSpeeder/cmake rexspeeder-build)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE ${BLT_LIB} rexspeeder)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${BLT_LIB} ${REX_LIB})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${BLT_HEADER}
+    ${REX_HEADER}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/Header Files
-    ../Librarby/RexSpeeder/include
 )
 
 # Copies the dll and puts it next to my .exe after building

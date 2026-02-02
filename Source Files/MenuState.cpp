@@ -3,7 +3,6 @@
 #include "Header Files/SetThemeState.h"
 #include <BearLibTerminal.h>
 #include <string>
-#include "Header Files/BigString.h"
 
 namespace states
 {
@@ -18,8 +17,7 @@ namespace states
 	
 	void MenuState::Update(GameContext* p_gameContext)
 	{
-		terminal_refresh();
-
+		terminal_clear();
 		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
 		terminal_clear_area(1, 8, 237, 1);
 		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, (mainMenuChoiceArray[p_gameContext->Selection]).c_str());
@@ -56,7 +54,7 @@ namespace states
 			return;
 		}
 
-		p_gameContext->Selection += (p_gameContext->Key == TK_UP) ? -1 : 1;
+		p_gameContext->Selection += (p_gameContext->Key == TK_UP) ? -1 : (p_gameContext->Key == TK_DOWN) ? 1 : 0;
 		p_gameContext->Selection = (p_gameContext->Selection < 0) ? 0 : (p_gameContext->Selection > NUM_CHOICHES-1) ? NUM_CHOICHES-1 : p_gameContext->Selection;
 	}
 	
@@ -72,7 +70,7 @@ namespace states
 		{
 			terminal_print_ext(1, i+2, 237,10,TK_ALIGN_CENTER, mainMenuChoiceArray[i].c_str());
 		}
-		terminal_print_ext(1, 45, 237, 10, TK_ALIGN_CENTER, "Press 'escape' to instantly quit the game at anytime :D");
+		terminal_print_ext(1, 45, 237, 10, TK_ALIGN_CENTER, "Press 'escape' to instantly quit the game at anytime :D\nPress Alt+Enter to toggle fullscreen. (It does not always scale properly so manually maximise the window and then press Alt+Enter.)");
 	}
 }
 

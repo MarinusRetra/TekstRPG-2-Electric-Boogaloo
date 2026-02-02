@@ -14,6 +14,7 @@ namespace states
 	{
 		gamedata::Slider& _selectedSlider = gamedata::SettingsDataInstance.GetSelectedSlider(p_gameContext->Selection);
 
+		terminal_clear();
 		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
 		terminal_clear_area(1, 8, 237, 2); // Clears the selection text.
 		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, _selectedSlider.name.c_str());

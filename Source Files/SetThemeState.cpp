@@ -17,6 +17,7 @@ namespace states
 
 	void SetThemeState::Update(GameContext* p_gameContext)
 	{
+		terminal_clear();
 		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
 		terminal_clear_area(1, NUM_THEMES+3, 237, 1);
 		terminal_print_ext(1, NUM_THEMES+3, 237, 10, TK_ALIGN_CENTER, themesArray[p_gameContext->Selection].c_str());

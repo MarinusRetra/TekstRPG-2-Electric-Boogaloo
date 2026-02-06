@@ -32,7 +32,6 @@ find_path(BLT_BIN
 message("BearLibTerminal Binary: ${BLT_BIN}")
 
 
-
 #Add REXSpeeder
 set(REX_FLD ../Librarby/REXSpeeder)
 message("REXSpeeder Folder: ${REX_FLD}")
@@ -63,7 +62,15 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Header Files
 )
 
-# Copies the dll and puts it next to my .exe after building
+
+set(FONTS_FLD ${CMAKE_CURRENT_SOURCE_DIR}/ResourceFiles/Fonts)
+message("Fonts: ${FONTS_FLD}")
+
+set(CONFIG ${CMAKE_CURRENT_SOURCE_DIR}/config.ini)
+message("Config: ${CONFIG}")
+
+
+# Copies the dll from BearLibTerminal and puts it into my build folder.
 add_custom_command(
     TARGET ${PROJECT_NAME}
     POST_BUILD
@@ -71,3 +78,28 @@ add_custom_command(
         ${BLT_BIN}/BearLibTerminal.dll
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
 )
+
+# Deletes the old config.ini and copies the config.ini from the project after building and places it into my build folder.
+add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E rm -f
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>/config.txt
+    COMMAND ${CMAKE_COMMAND} -E copy
+            ${CONFIG}
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>
+)
+
+# Deletes the old fonts folder, copies it from the project after building and places it into my build folder.
+add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E rm -rf
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>/Fonts
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${FONTS_FLD}
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>/Fonts
+)
+
+
+

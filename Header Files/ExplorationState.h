@@ -14,9 +14,12 @@ namespace states
 		void Update(GameContext* p_gameContext) override;
 
 		void Exit(GameContext* p_gameContext) override;
+
+	private:
+		void PrintMap(GameContext* p_gameContext);
 	};
 
-	static ExplorationState MenuStateInstance;
+	extern ExplorationState ExplorationStateInstance;
 }
 
 

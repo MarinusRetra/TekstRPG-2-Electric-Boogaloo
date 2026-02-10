@@ -17,10 +17,14 @@ namespace states
 
 	void SetThemeState::Update(GameContext* p_gameContext)
 	{
+		p_gameContext->CurrentPrintHeight = terminal_state(TK_HEIGHT);
+		p_gameContext->CurrentPrintWidth = terminal_state(TK_WIDTH)-10;
+		
+		//TODO: Put these in the print menu function.
 		terminal_clear();
-		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
-		terminal_clear_area(1, NUM_THEMES+3, 237, 1);
-		terminal_print_ext(1, NUM_THEMES+3, 237, 10, TK_ALIGN_CENTER, themesArray[p_gameContext->Selection].c_str());
+		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), p_gameContext->CurrentPrintHeight);
+		terminal_clear_area(1, p_gameContext->CurrentPrintHeight/4, p_gameContext->CurrentPrintWidth, 1);
+		terminal_print_ext(1, p_gameContext->CurrentPrintHeight/4, p_gameContext->CurrentPrintWidth, 1, TK_ALIGN_CENTER, themesArray[p_gameContext->Selection].c_str());
 		PrintMenu();
 		terminal_refresh();
 
@@ -61,7 +65,7 @@ namespace states
 	{
 		for (int i = 0; i < NUM_THEMES; i++)
 		{
-			terminal_print_ext(1, i + 2, 237, 10, TK_ALIGN_CENTER, themesArray[i].c_str());
+			terminal_print_ext(1, i+2, terminal_state(TK_WIDTH)-10, 10, TK_ALIGN_CENTER, themesArray[i].c_str());
 		}
 		terminal_refresh();
 	}

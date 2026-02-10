@@ -12,13 +12,16 @@ namespace states
 
 	void SettingsState::Update(GameContext* p_gameContext)
 	{
+		p_gameContext->CurrentPrintHeight = terminal_state(TK_HEIGHT);
+		p_gameContext->CurrentPrintWidth = terminal_state(TK_WIDTH)-10;
+		
 		gamedata::Slider& _selectedSlider = gamedata::SettingsDataInstance.GetSelectedSlider(p_gameContext->Selection);
 
-		terminal_clear();
-		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), terminal_state(TK_HEIGHT));
-		terminal_clear_area(1, 8, 237, 2); // Clears the selection text.
-		terminal_print_ext(1, 8, 237, 10, TK_ALIGN_CENTER, _selectedSlider.name.c_str());
-		terminal_print_ext(1, 9, 237, 10, TK_ALIGN_CENTER,  (_selectedSlider.value == 0) ? "" : std::to_string(_selectedSlider.value).c_str());
+		terminal_clear(); //TODO: Dont make it clear the entire screen every update.
+		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), p_gameContext->CurrentPrintHeight);
+		terminal_clear_area(1, p_gameContext->CurrentPrintHeight/4, p_gameContext->CurrentPrintWidth, 2); // Clears the selection text.
+		terminal_print_ext(1, p_gameContext->CurrentPrintHeight/4, p_gameContext->CurrentPrintWidth, 10, TK_ALIGN_CENTER, _selectedSlider.name.c_str());
+		terminal_print_ext(1, (p_gameContext->CurrentPrintHeight/4)+1, p_gameContext->CurrentPrintWidth, 10, TK_ALIGN_CENTER,  (_selectedSlider.value == 0) ? "" : std::to_string(_selectedSlider.value).c_str());
 		PrintMenu();
 		terminal_refresh();
 
@@ -49,8 +52,8 @@ namespace states
 	{
 		for (int i = 0; i < gamedata::NUM_MAIN_SETTINGS-1; i++)
 		{
-			terminal_print_ext(1, i + 2, 237, 10, TK_ALIGN_CENTER, gamedata::SettingsDataInstance.GetSelectedSlider(i).GetAndUpdateSetting().c_str());
+			terminal_print_ext(1, i + 2, terminal_state(TK_WIDTH)/2, 10, TK_ALIGN_CENTER, gamedata::SettingsDataInstance.GetSelectedSlider(i).GetAndUpdateSetting().c_str());
 		}
-		terminal_print_ext(1, gamedata::NUM_MAIN_SETTINGS+1, 237, 10, TK_ALIGN_CENTER, "Back");
+		terminal_print_ext(1, gamedata::NUM_MAIN_SETTINGS+1, terminal_state(TK_WIDTH)-10, 5, TK_ALIGN_CENTER, "Back");
 	}
 }

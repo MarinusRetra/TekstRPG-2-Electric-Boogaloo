@@ -7,12 +7,15 @@
 
 class GameContext 
 {
+
 public:
 	StateMachine<GameContext> m_StateMachine;
-
 	bool GameIsRunning = true;
 	int Selection = 0;
 	int Key = 0;
+
+	int CurrentPrintWidth = terminal_state(TK_WIDTH);
+	int CurrentPrintHeight = terminal_state(TK_HEIGHT);
 
 	// This is so i don't have to include gamecontext when i want to get current theme and so I don't need themes when I already have gamecontext.
 	themes::Theme& GetCurrentTheme()

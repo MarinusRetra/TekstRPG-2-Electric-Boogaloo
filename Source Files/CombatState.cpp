@@ -2,6 +2,8 @@
 #include <BearLibTerminal.h>
 #include <string>
 
+using namespace context;
+
 namespace states
 {
     void CombatState::Enter(GameContext* p_gameContext)

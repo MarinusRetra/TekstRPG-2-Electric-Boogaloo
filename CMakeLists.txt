@@ -1,16 +1,19 @@
 cmake_minimum_required(VERSION 3.10.0)
 project(Dude VERSION 0.1.0 LANGUAGES C CXX)
 
-file(GLOB_RECURSE PROJECT_SOURCES
-    "${CMAKE_CURRENT_SOURCE_DIR}/Source Files/*.cpp"
-)
+file(GLOB_RECURSE PROJECT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/Source Files/*.cpp")
 
-file(GLOB_RECURSE PROJECT_HEADERS
-    "${CMAKE_CURRENT_SOURCE_DIR}/Header Files/*.h"
-)
+file(GLOB_RECURSE PROJECT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Header Files/*.h")
+
+
+#Change this to path to a folder with all of your libraries
+#The names of your libraries should match: BearLibTerminal, REXSpeeder, ZLIB
+set(LIBRARY_FOLDER ../Librarby) 
+message("Library Folder: ${LIBRARY_FOLDER}")
+
 
 #Add BearLibTerminal
-set(BLT_FLD ../Librarby/BearLibTerminal_0.15.8)
+set(BLT_FLD ${LIBRARY_FOLDER}/BearLibTerminal)
 message("BearLibTerminal Folder: ${BLT_FLD}")
 
 find_library(BLT_LIB
@@ -31,15 +34,15 @@ find_path(BLT_BIN
 )
 message("BearLibTerminal Binary: ${BLT_BIN}")
 
+#Add ZLIB
+set(ZLIB_FLD ${LIBRARY_FOLDER}/ZLIB)
+message("ZLIB Folder: ${ZLIB_FLD}")
 
 #Add REXSpeeder
-set(REX_FLD ../Librarby/REXSpeeder)
+set(REX_FLD ${LIBRARY_FOLDER}/REXSpeeder)
 message("REXSpeeder Folder: ${REX_FLD}")
 
-find_library(REX_LIB
-    NAMES rexspeeder.lib
-    PATHS ${REX_FLD}/build/Debug
-)
+add_library(REX_LIB STATIC ${REX_FLD}/src/REXSpeeder.cpp)
 message("REXSpeeder Library: ${REX_LIB}")
 
 find_path(REX_HEADER
@@ -53,15 +56,19 @@ add_executable(${PROJECT_NAME}
     ${PROJECT_HEADERS}
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${BLT_LIB} ${REX_LIB})
+add_subdirectory(${LIBRARY_FOLDER}/ZLIB zlib-build)
+target_include_directories(REX_LIB PUBLIC ${REX_HEADER} ${ZLIB_HEADER})
+target_link_libraries(REX_LIB PUBLIC zlib)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE ${BLT_LIB} REX_LIB)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
+    ${ZLIB_HEADER}
     ${BLT_HEADER}
     ${REX_HEADER}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/Header Files
 )
-
 
 set(FONTS_FLD ${CMAKE_CURRENT_SOURCE_DIR}/ResourceFiles/Fonts)
 message("Fonts: ${FONTS_FLD}")
@@ -76,6 +83,15 @@ add_custom_command(
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${BLT_BIN}/BearLibTerminal.dll
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
+#    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+ #       ${BLT_LIB}/BearLibTerminal.lib
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+       $<TARGET_FILE:zlib>
+       $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:REX_LIB>
         $<TARGET_FILE_DIR:${PROJECT_NAME}>
 )
 

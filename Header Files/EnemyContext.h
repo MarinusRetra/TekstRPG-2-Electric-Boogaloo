@@ -3,10 +3,13 @@
 
 #include "Header Files/StateMachine.h"
 
-struct EnemyContext
+namespace context
 {
-	StateMachine<EnemyContext> m_StateMachine;
-	int m_Health;
-};
+	struct EnemyContext
+	{
+		StateMachine<EnemyContext> m_StateMachine;
+		int m_Health;
+	};
+}
 
 #endif

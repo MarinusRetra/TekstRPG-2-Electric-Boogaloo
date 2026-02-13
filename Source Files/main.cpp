@@ -6,6 +6,8 @@
 #include "Header Files/SettingData.h"
 #include <iostream>
 
+using namespace context;
+
 using namespace std;
 
 int main() {

@@ -5,6 +5,8 @@
 #include <BearLibTerminal.h>
 #include <string>
 
+using namespace context;
+
 namespace states
 {
 	enum MainMenuChoices{ PLAY, SETTINGS, THEMES, QUIT, NUM_CHOICHES };

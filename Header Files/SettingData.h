@@ -5,6 +5,7 @@
 #include <fstream>
 #include "Themes.h"
 
+
 namespace gamedata
 {
 	enum SettingsMenuChoices { GAME_SOUND_EFFECTS, MUSIC, MENU_SOUNDS, BACK, NUM_MAIN_SETTINGS };

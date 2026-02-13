@@ -4,6 +4,8 @@
 #include "Header Files/IState.h"
 #include "Header Files/GameContext.h"
 
+using namespace context;
+
 namespace states
 {
 	class MenuState : public IState<GameContext>

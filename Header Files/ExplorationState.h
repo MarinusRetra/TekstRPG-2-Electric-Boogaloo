@@ -18,12 +18,10 @@ namespace states
 		void Exit(GameContext* p_gameContext) override;
 
 	private:
-		void PrintMap(GameContext* p_gameContext);
+		void PrintMap(GameContext* p_gameContext, xp::RexImage&);
 	};
 
 	extern ExplorationState ExplorationStateInstance;
 }
-
-
 
 #endif

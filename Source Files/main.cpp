@@ -12,9 +12,17 @@ using namespace std;
 
 int main() {
 
+    terminal_open();
+
+    terminal_set("font: Fonts/cp437_16x16.png, size=16x16, codepage=437, layer=0");
+    terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt, layer=1");
+
+    terminal_layer(0);
+    terminal_set("font: Fonts/cp437_16x16.png, size=16x16, codepage=437, layer=0");
+
+
     EnemyContext EnemyContext; // Will probably move this somewhere else later.
     GameContext GameContext;
-    terminal_open();
 
     if (!gamedata::SettingsDataInstance.LoadFromFile("settings.txt"))
     {

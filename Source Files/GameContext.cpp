@@ -1,7 +1,5 @@
 #include "Header Files/GameContext.h"
-#include "Header Files/Themes.h"
-#include <BearLibTerminal.h>
-#include <REXSpeeder.h>
+#include "BearLibTerminal.h"
 
 namespace context
 {
@@ -42,17 +40,6 @@ namespace context
 		}
 	}
 
-
-	void func()
-	{
-		try
-		{
-			xp::RexImage currentMap("ResourceFiles/Maps/OverWorld1.xp");
-			currentMap.flatten();
-		}
-		catch (xp::Rexception& e) {
-			std::cerr << "Exception! " << e.what() << " [" << e.code << "]" << std::endl;
-		}
-	}
-
+	GameContext::GameContext() : currentMap("Maps/OverWorld1.xp")
+	{}
 }

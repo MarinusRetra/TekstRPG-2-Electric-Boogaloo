@@ -43,7 +43,6 @@ set(REX_FLD ${LIBRARY_FOLDER}/REXSpeeder)
 message("REXSpeeder Folder: ${REX_FLD}")
 
 add_library(REX_LIB STATIC ${REX_FLD}/src/REXSpeeder.cpp)
-message("REXSpeeder Library: ${REX_LIB}")
 
 find_path(REX_HEADER
     NAMES REXSpeeder.h
@@ -55,6 +54,7 @@ add_executable(${PROJECT_NAME}
     ${PROJECT_SOURCES}
     ${PROJECT_HEADERS}
 )
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
 add_subdirectory(${LIBRARY_FOLDER}/ZLIB zlib-build)
 target_include_directories(REX_LIB PUBLIC ${REX_HEADER} ${ZLIB_HEADER})
@@ -72,6 +72,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 set(FONTS_FLD ${CMAKE_CURRENT_SOURCE_DIR}/ResourceFiles/Fonts)
 message("Fonts: ${FONTS_FLD}")
+
+set(MAPS_FLD ${CMAKE_CURRENT_SOURCE_DIR}/ResourceFiles/Maps)
+message("Fonts: ${MAPS_FLD}")
 
 set(CONFIG ${CMAKE_CURRENT_SOURCE_DIR}/config.ini)
 message("Config: ${CONFIG}")
@@ -106,7 +109,7 @@ add_custom_command(
             $<TARGET_FILE_DIR:${PROJECT_NAME}>
 )
 
-# Deletes the old fonts folder, copies it from the project after building and places it into my build folder.
+# Deletes the old fonts and maps folder, copies them from the project after building and places them into my build folder.
 add_custom_command(
     TARGET ${PROJECT_NAME}
     POST_BUILD
@@ -115,6 +118,11 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${FONTS_FLD}
             $<TARGET_FILE_DIR:${PROJECT_NAME}>/Fonts
+    COMMAND ${CMAKE_COMMAND} -E rm -rf
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>/Maps
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${MAPS_FLD}
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>/Maps
 )
 
 

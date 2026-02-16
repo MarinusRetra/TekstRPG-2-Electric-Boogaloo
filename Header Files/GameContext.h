@@ -2,18 +2,20 @@
 #define GAMECONTEXT_H
 
 #include "Header Files/StateMachine.h"
-#include "BearLibTerminal.h"
 #include "Themes.h"
+#include "REXSpeeder.h"
 
 namespace context
 {
 	class GameContext 
 	{
 	public:
+		xp::RexImage currentMap;
+
 		StateMachine<GameContext> m_StateMachine;
 
-		int CurrentPrintWidth = terminal_state(TK_WIDTH);
-		int CurrentPrintHeight = terminal_state(TK_HEIGHT);
+		int CurrentPrintWidth = 0;
+		int CurrentPrintHeight = 0;
 
 		bool GameIsRunning = true;
 		int Selection = 0;
@@ -21,7 +23,9 @@ namespace context
 	
 		// This is so i don't have to include gamecontext when i want to get current theme and so I don't need themes when I already have gamecontext.
 		themes::Theme& GetCurrentTheme();
-	
+		
+		GameContext();
+
 		//Sets the theme, reprints the border and refreshes the terminal.
 		void SetTheme(color_t textColor, color_t backgroundColor, int BorderSymbol1, int BorderSymbol2);
 	
@@ -32,8 +36,6 @@ namespace context
 	
 		void CheckGameClose();
 	};
-
-	//extern xp::RexImage currentMap;
 }
 
 #endif

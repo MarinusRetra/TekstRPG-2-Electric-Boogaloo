@@ -52,7 +52,7 @@ namespace states
 	{
 		for (int i = 0; i < gamedata::NUM_MAIN_SETTINGS-1; i++)
 		{
-			terminal_print_ext(1, i + 2, terminal_state(TK_WIDTH)/2, 10, TK_ALIGN_CENTER, gamedata::SettingsDataInstance.GetSelectedSlider(i).GetAndUpdateSetting().c_str());
+			terminal_print_ext(1, i + 2, terminal_state(TK_WIDTH) - 10, 10, TK_ALIGN_CENTER, gamedata::SettingsDataInstance.GetSelectedSlider(i).GetAndUpdateSetting().c_str());
 		}
 		terminal_print_ext(1, gamedata::NUM_MAIN_SETTINGS+1, terminal_state(TK_WIDTH)-10, 5, TK_ALIGN_CENTER, "Back");
 	}

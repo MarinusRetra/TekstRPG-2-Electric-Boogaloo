@@ -43,7 +43,7 @@ namespace states
 
     void ExplorationState::PrintMap(GameContext* p_gameContext, xp::RexImage& mapIn)//TODO: Clean this function up a bit.
     {
-        terminal_clear();
+        //terminal_clear();
         terminal_layer(1);
         terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
 
@@ -64,16 +64,6 @@ namespace states
             }
         }
 
-        //for (int i = 0; i < 80; i++)
-        //{
-        //    terminal_put(i, 10, glyphMap[i]);
-        //}
-        //for (int i = 256; i < 336; i++)
-        //{
-        //    terminal_put(i-256, 12, glyphMap[i]);
-        //}
-        //terminal_refresh();
-
         xp::RexTile firstTile = *mapIn.getTile(0, 0, 0);
         color_t previousTileFore = color_from_argb(255, firstTile.fore_red, firstTile.fore_green, firstTile.fore_blue);
         terminal_color(previousTileFore);
@@ -91,7 +81,9 @@ namespace states
                     previousTileFore = currentColor;
                 }
 
-                uint32_t tileIndex = // The reximage struct was not made for fonts larger than 16x32 so i had to change it.
+                    // The reximage struct was not made for fonts larger than 16x16 so i had to change so that it now jumps
+                    // ahead far enough to the next valid memory address instead of it jumping to wrong adresses and wrapping back to the first 256 chars and nothing else.
+                uint32_t tileIndex = 
                     static_cast<uint32_t>(tile.character) |
                     (static_cast<uint32_t>(tile.__padding[0]) << 8) |
                     (static_cast<uint32_t>(tile.__padding[1]) << 16) |

@@ -15,15 +15,11 @@ namespace states
     void ExplorationState::Enter(GameContext* p_gameContext)
     {
         PrintMap(p_gameContext, p_gameContext->currentMap);
-
         terminal_refresh();
-
     }
     
     void ExplorationState::Update(GameContext* p_gameContext)
     {
-       // terminal_clear();
-
         p_gameContext->Key = terminal_read();
         p_gameContext->CheckGameClose();
 
@@ -41,28 +37,10 @@ namespace states
         terminal_refresh();
     }
 
-    void ExplorationState::PrintMap(GameContext* p_gameContext, xp::RexImage& mapIn)//TODO: Clean this function up a bit.
+    void ExplorationState::PrintMap(GameContext* p_gameContext, xp::RexImage& mapIn)
     {
-        //terminal_clear();
         terminal_layer(1);
         terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
-
-        static std::vector<int> glyphMap;
-        if (glyphMap.empty())
-        {
-            std::ifstream codepageFile("Fonts/Monochrome_ReReRePacked_codepage.txt");
-            std::string line;
-            while (std::getline(codepageFile, line)) {
-                if (!line.empty()) {
-                    if (line.rfind("U+", 0) == 0)
-                    {
-                        line = line.substr(2);
-                    }
-                    int codepoint = std::stoi(line, nullptr, 16);
-                    glyphMap.push_back(codepoint);
-                }
-            }
-        }
 
         xp::RexTile firstTile = *mapIn.getTile(0, 0, 0);
         color_t previousTileFore = color_from_argb(255, firstTile.fore_red, firstTile.fore_green, firstTile.fore_blue);
@@ -81,18 +59,13 @@ namespace states
                     previousTileFore = currentColor;
                 }
 
-                    // The reximage struct was not made for fonts larger than 16x16 so i had to change so that it now jumps
-                    // ahead far enough to the next valid memory address instead of it jumping to wrong adresses and wrapping back to the first 256 chars and nothing else.
-                uint32_t tileIndex = 
-                    static_cast<uint32_t>(tile.character) |
-                    (static_cast<uint32_t>(tile.__padding[0]) << 8) |
+                //TODO: Figure this out a bit better
+                uint32_t tileIndex = static_cast<uint32_t>(tile.character) |
+                    (static_cast<uint32_t>(tile.__padding[0]) << 8) | 
                     (static_cast<uint32_t>(tile.__padding[1]) << 16) |
                     (static_cast<uint32_t>(tile.__padding[2]) << 24);
 
-                if (tileIndex < glyphMap.size())
-                {
-                    terminal_put(x, y, glyphMap[tileIndex]);
-                }
+                    terminal_put(x, y, 0xE000 + tileIndex);
             }
         }
 

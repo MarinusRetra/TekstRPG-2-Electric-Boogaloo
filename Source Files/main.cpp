@@ -10,15 +10,16 @@ using namespace context;
 
 using namespace std;
 
+//TODO: Make all the static states an extern instead.
+
 int main() {
 
     terminal_open();
 
-    terminal_set("font: Fonts/cp437_16x16.png, size=16x16, codepage=437");
-
-
     EnemyContext EnemyContext; // Will probably move this somewhere else later.
     GameContext GameContext;
+
+    GameContext.SwapFontAndLayer(context::UI);
 
     if (!gamedata::SettingsDataInstance.LoadFromFile("settings.txt"))
     {

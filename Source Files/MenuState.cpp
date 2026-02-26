@@ -7,6 +7,8 @@
 
 using namespace context;
 
+//TODO: Add a controls tab to the game.
+
 namespace states
 {
 	enum MainMenuChoices{ PLAY, SETTINGS, THEMES, QUIT, NUM_CHOICHES };

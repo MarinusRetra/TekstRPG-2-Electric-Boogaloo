@@ -1,10 +1,5 @@
 #include "Header Files/ExplorationState.h"
 #include <BearLibTerminal.h>
-#include <string>
-
-#include <vector>
-#include <fstream>
-#include <iostream>
 
 using namespace context;
 
@@ -14,6 +9,8 @@ namespace states
 
     void ExplorationState::Enter(GameContext* p_gameContext)
     {
+        terminal_set("input.filter = [W,A,S,D, up, left, right down, return, escape, MOUSE_RIGHT]");
+
         PrintMap(p_gameContext, p_gameContext->currentMap);
         terminal_refresh();
     }
@@ -23,6 +20,11 @@ namespace states
         p_gameContext->Key = terminal_read();
         p_gameContext->CheckGameClose();
 
+
+
+
+
+
         p_gameContext->CurrentPrintHeight = terminal_state(TK_HEIGHT);
         p_gameContext->CurrentPrintWidth = terminal_state(TK_WIDTH) - 10;
 
@@ -31,16 +33,14 @@ namespace states
     
     void ExplorationState::Exit(GameContext* p_gameContext)
     {
-        terminal_layer(0); //TODO: Make proper swapfont functions.
-        terminal_set("font: Fonts/cp437_16x16.png, size=16x16, codepage=437");
+        p_gameContext->SwapFontAndLayer(context::UI);
         terminal_clear();
         terminal_refresh();
     }
 
     void ExplorationState::PrintMap(GameContext* p_gameContext, xp::RexImage& mapIn)
     {
-        terminal_layer(1);
-        terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
+        p_gameContext->SwapFontAndLayer(context::MAP_VISUAL);
 
         xp::RexTile firstTile = *mapIn.getTile(0, 0, 0);
         color_t previousTileFore = color_from_argb(255, firstTile.fore_red, firstTile.fore_green, firstTile.fore_blue);

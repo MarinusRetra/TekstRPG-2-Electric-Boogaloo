@@ -27,6 +27,29 @@ namespace context
 		}
 	}
 
+	void GameContext::SwapFontAndLayer(int layerIn)
+	{
+		terminal_layer(layerIn);
+
+		switch (layerIn)
+		{
+		case (UI):
+			terminal_set("font: Fonts/cp437_16x16.png, size=16x16, codepage=437");
+			break;
+		case (MAP_VISUAL):
+			terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
+			break;
+		case (MAP_COLLISION):
+			terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
+			break;
+		case (MAP_INTERACTABLES): //MAP_INTERACTABLES Might become something different later, not sure how to implement it yet.
+			terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
+			break;
+		default:
+			break;
+		}
+	}
+
 	themes::Theme& GameContext::GetCurrentTheme()
 	{
 		return themes::CurrentTheme;

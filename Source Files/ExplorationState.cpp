@@ -1,4 +1,5 @@
 #include "Header Files/ExplorationState.h"
+#include "Header Files/GameUtility.h"
 #include <BearLibTerminal.h>
 
 using namespace context;
@@ -19,6 +20,7 @@ namespace states
     {
         p_gameContext->Key = terminal_read();
         p_gameContext->CheckGameClose();
+
 
 
 
@@ -59,13 +61,9 @@ namespace states
                     previousTileFore = currentColor;
                 }
 
-                //TODO: Figure this out a bit better
-                uint32_t tileIndex = static_cast<uint32_t>(tile.character) |
-                    (static_cast<uint32_t>(tile.__padding[0]) << 8) | 
-                    (static_cast<uint32_t>(tile.__padding[1]) << 16) |
-                    (static_cast<uint32_t>(tile.__padding[2]) << 24);
+                uint32_t tileIndex = game_utility::ConvertTileToUint32(tile);
 
-                    terminal_put(x, y, 0xE000 + tileIndex);
+                terminal_put(x, y, 0xE000 + tileIndex);
             }
         }
 

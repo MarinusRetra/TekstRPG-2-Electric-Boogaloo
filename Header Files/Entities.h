@@ -2,7 +2,9 @@
 #define ENTITY_H
 #include "BaseEntity.h"
 #include <REXSpeeder.h>
-
+#include <string>
+#include <vector>
+#include <utility>
 
 /// <summary>
 /// This namespace includes OverWorldEntity, CombatEntity, InteractableEntities.
@@ -11,7 +13,16 @@ namespace entities
 {
 	class Entity : public base_entity::BaseEntity
 	{
+	public:
+		Entity(xp::RexTile _characterIn, std::string _nameIn, int _attackIn, int _mAttackIn, int _agilityIn, int _defenseIn, int _mDefenseIn, int _maxHealtIn);
 
+		std::vector<std::pair<int, int>> SpawnPositions = { {0,0} };
+
+		int PositionX = 0;
+		int PositionY = 0;
+
+		xp::RexTile CurrentFacingTile = { 0, 0, 0, 0, 255, 0, 255 }; // TODO: Change this later to use my tile class instead for interactions and such. 
+		xp::RexTile Character = { 30, 255, 255, 255, 255, 255, 255 };
 	};
 
 	class OverWorldEntity : public Entity
@@ -21,10 +32,6 @@ namespace entities
 		//~OverWorldEntity();
 
 		//CombatEntity CombatEntity;
-		int PositionX;
-		int PositionY;
-		xp::RexTile Character; // Might need to change to an unint32 later.
-		xp::RexTile CurrentFacingTile;
 	};
 
 	class CombatEntity : public Entity

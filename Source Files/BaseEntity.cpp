@@ -6,6 +6,19 @@
 
 namespace base_entity
 {
+
+	BaseEntity::BaseEntity(std::string _nameIn, int _attackIn, int _mAttackIn, int _agilityIn, int _defenseIn, int _mDefenseIn, int _maxHealtIn)
+	{
+		Name = _nameIn;
+		Attack = _attackIn;
+		MAttack = _mAttackIn;
+		Agility = _agilityIn;
+		Defense = _defenseIn;
+		MDefense = _mDefenseIn;
+		MaxHealth = _maxHealtIn;
+		Health = MaxHealth;
+	}
+
 	template<typename Effect>
 	void BaseEntity::RollGetStatusEffect(Effect statusEffectIn, double statusEffectChanceIn)
 	{
@@ -35,7 +48,12 @@ namespace base_entity
 			}
 		}
 	}
-	
+
+	BaseEntity::~BaseEntity()
+	{
+
+	}
+
 
 	/// <summary>
 	/// Keeps a list of every status this entity can get.

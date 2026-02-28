@@ -10,6 +10,8 @@ namespace base_entity
 	class BaseEntity
 	{
 	public:
+		BaseEntity(std::string _nameIn, int _attackIn, int _mAttackIn, int _agilityIn, int _defenseIn, int _mDefenseIn, int _maxHealtIn);
+		~BaseEntity(); // Might put the drop loot functionality here.
 		virtual void TakeDamage(int damageIn)
 		{
 			Health -= damageIn;
@@ -20,14 +22,14 @@ namespace base_entity
 		template<typename Effect>
 		Effect GetVulnerableStatusEffect(std::string nameIn);
 
-		std::string Name = "";
-		int Health = 0;
-		int Attack = 0;
-		int MAttack = 0;
-		int Agility = 0;
-		int Defense = 0;
-		int MDefense = 0;
-		int MaxHealth = 0;
+		std::string Name; // 1
+		int Health;		  
+		int Attack;		  // 2
+		int MAttack;	  // 3
+		int Agility;	  // 4
+		int Defense;	  // 5
+		int MDefense;	  // 6
+		int MaxHealth;	  // 7
 	};
 }
 

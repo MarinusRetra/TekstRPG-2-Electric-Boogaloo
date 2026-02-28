@@ -1,5 +1,5 @@
-#include "Header Files/GameContext.h"
 #include "BearLibTerminal.h"
+#include "Header Files/GameContext.h"
 
 namespace context
 {
@@ -63,6 +63,8 @@ namespace context
 		}
 	}
 
-	GameContext::GameContext() : currentMap("Maps/OverWorld1.xp")
-	{}
+	GameContext::GameContext() : 
+		currentMap("Maps/OverWorld1.xp"), 
+		Player({ 30, 255, 255, 255, 255, 255, 255 }, "Daan", 15, 10, 5, 10, 10, 80) 
+		{}
 }

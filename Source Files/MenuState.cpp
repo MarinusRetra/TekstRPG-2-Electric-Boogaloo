@@ -8,6 +8,7 @@
 using namespace context;
 
 //TODO: Add a controls tab to the game.
+//TODO: Replace all terminal_clear with a clear that wipes just the current layer.
 
 namespace states
 {

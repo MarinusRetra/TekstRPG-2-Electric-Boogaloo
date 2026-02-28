@@ -4,6 +4,7 @@
 #include "Header Files/StateMachine.h"
 #include "Themes.h"
 #include "REXSpeeder.h"
+#include "Entities.h"
 
 namespace context
 {
@@ -20,7 +21,9 @@ namespace context
 		bool GameIsRunning = true;
 		int Selection = 0;
 		int Key = 0;
-	
+		
+		entities::Entity Player;
+			
 		// This is so i don't have to include gamecontext when i want to get current theme and so I don't need themes when I already have gamecontext.
 		themes::Theme& GetCurrentTheme();
 		

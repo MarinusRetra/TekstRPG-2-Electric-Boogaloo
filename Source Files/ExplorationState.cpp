@@ -22,11 +22,6 @@ namespace states
         p_gameContext->CheckGameClose();
 
 
-
-
-
-
-
         p_gameContext->CurrentPrintHeight = terminal_state(TK_HEIGHT);
         p_gameContext->CurrentPrintWidth = terminal_state(TK_WIDTH) - 10;
 

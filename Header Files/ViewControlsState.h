@@ -3,6 +3,7 @@
 
 #include "Header Files/IState.h"
 #include "Header Files/GameContext.h"
+#include <string>
 
 using namespace context;
 
@@ -10,6 +11,7 @@ namespace states
 {
 	class ViewControlsState : public IState<GameContext>
 	{
+
 	public:
 		void Enter(GameContext* p_gameContext) override;
 
@@ -17,10 +19,17 @@ namespace states
 
 		void Exit(GameContext* p_gameContext) override;
 	private:
-		void PrintPlayers();
+		void PrintControls() const;
 	};
 
-	extern ViewControlsState SetThemeStateInstance;
+	//TODO: Make a struct with a template so I can setup key value pairs a bit better.
+	struct ControlText
+	{
+		std::string Button;
+		std::string Description;
+	};
+
+	extern ViewControlsState ViewControlsStateInstance;
 }
 
 #endif 

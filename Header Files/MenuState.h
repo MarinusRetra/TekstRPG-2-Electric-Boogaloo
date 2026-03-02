@@ -20,7 +20,7 @@ namespace states
 		void PrintMainMenu();
 	};
 
-	static MenuState MenuStateInstance;
+	extern MenuState MenuStateInstance;
 }
 
 #endif 

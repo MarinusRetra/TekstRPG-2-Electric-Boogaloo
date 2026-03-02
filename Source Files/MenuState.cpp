@@ -1,7 +1,9 @@
 #include "Header Files/MenuState.h"
 #include "Header Files/SettingsState.h"
 #include "Header Files/SetThemeState.h"
-#include <Header Files/ExplorationState.h>
+#include "Header Files/ExplorationState.h"
+#include "Header Files/CharacterSelectionState.h"
+#include "Header Files/ViewControlsState.h"
 #include <BearLibTerminal.h>
 #include <string>
 
@@ -12,8 +14,10 @@ using namespace context;
 
 namespace states
 {
-	enum MainMenuChoices{ PLAY, SETTINGS, THEMES, QUIT, NUM_CHOICHES };
-	std::string mainMenuChoiceArray[NUM_CHOICHES] = { "Play","Settings","Themes","Quit" };
+	MenuState MenuStateInstance;
+
+	enum MainMenuChoices{ PLAY, SETTINGS, THEMES, VIEW_CONTROLS, QUIT, NUM_CHOICHES };
+	std::string mainMenuChoiceArray[NUM_CHOICHES] = { "Play", "Settings", "Themes", "View Controls", "Quit"};
 	
 	void MenuState::Enter(GameContext* p_gameContext)
 	{
@@ -40,7 +44,7 @@ namespace states
 			switch (p_gameContext->Selection)
 			{
 			case PLAY:
-				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &ExplorationStateInstance);
+				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &CharacterSelectionStateInstance);
 				break;
 
 			case SETTINGS:
@@ -50,7 +54,9 @@ namespace states
 			case THEMES:
 				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &SetThemeStateInstance);
 				break;
-
+			case VIEW_CONTROLS:
+				p_gameContext->m_StateMachine.ChangeState(p_gameContext, &ViewControlsStateInstance);
+				break;
 			case QUIT:
 				p_gameContext->GameIsRunning = false;
 				break;

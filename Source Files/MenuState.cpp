@@ -22,6 +22,9 @@ namespace states
 	void MenuState::Enter(GameContext* p_gameContext)
 	{
 		terminal_set("input.filter = [up, down, return, escape]"); 
+		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), p_gameContext->CurrentPrintHeight);
+		PrintMainMenu();
+		terminal_print_ext(1, terminal_state(TK_HEIGHT) / 2, terminal_state(TK_WIDTH) - 10, 5, TK_ALIGN_CENTER, "Press Alt+Enter to toggle fullscreen. (Fullscreen might not always scale the game properly however)\n\n Press 'escape' to instantly quit the game at anytime.");
 	}
 	
 	void MenuState::Update(GameContext* p_gameContext)
@@ -29,11 +32,8 @@ namespace states
 		p_gameContext->CurrentPrintHeight = terminal_state(TK_HEIGHT);
 		p_gameContext->CurrentPrintWidth = terminal_state(TK_WIDTH)-10;
 
-		terminal_clear();
-		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), p_gameContext->CurrentPrintHeight);
 		terminal_clear_area(1, p_gameContext->CurrentPrintHeight/4, p_gameContext->CurrentPrintWidth, 1);
 		terminal_print_ext(1, p_gameContext->CurrentPrintHeight/4, p_gameContext->CurrentPrintWidth, 1, TK_ALIGN_CENTER, (mainMenuChoiceArray[p_gameContext->Selection]).c_str());
-		PrintMainMenu();
 		terminal_refresh();
 
 	    p_gameContext->Key = terminal_read();
@@ -84,7 +84,6 @@ namespace states
 		{
 			terminal_print_ext(1, i+2, terminal_state(TK_WIDTH)-10, 5, TK_ALIGN_CENTER, mainMenuChoiceArray[i].c_str());
 		}
-		terminal_print_ext(1, terminal_state(TK_HEIGHT)/2, terminal_state(TK_WIDTH)-10, 5, TK_ALIGN_CENTER, "Press 'escape' to instantly quit the game at anytime :D\nPress Alt+Enter to toggle fullscreen. (It does not always scale properly so manually maximise the window and then press Alt+Enter.)");
 	}
 }
 

@@ -1,0 +1,140 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10.0"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "zlib-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-zlib-build-Release-0e452cd62c48e8f8a063.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.4.4"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "E:/Projects/Librarby/ZLIB",
+					"targetIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Dude",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "zlib",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Dude::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Dude-Release-14859d2f4b468e9ca8a8.json",
+					"name" : "Dude",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "REX_LIB::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-REX_LIB-Release-b87ce3c48ad9f3dc16d4.json",
+					"name" : "REX_LIB",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "example::@fe70c70f27738beb7e1f",
+					"jsonFile" : "target-example-Release-aa64e36b9f65faf8b7d1.json",
+					"name" : "example",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "minigzip::@fe70c70f27738beb7e1f",
+					"jsonFile" : "target-minigzip-Release-a91fe40b296c56f64043.json",
+					"name" : "minigzip",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "zlib::@fe70c70f27738beb7e1f",
+					"jsonFile" : "target-zlib-Release-504ffaf39a6b5d4e754b.json",
+					"name" : "zlib",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "zlibstatic::@fe70c70f27738beb7e1f",
+					"jsonFile" : "target-zlibstatic-Release-628f7e65e9c8bd4d2b33.json",
+					"name" : "zlibstatic",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "E:/Projects/TekstRPG-2-Electric-Boogaloo/out/build/x64-Release",
+		"source" : "E:/Projects/TekstRPG-2-Electric-Boogaloo"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

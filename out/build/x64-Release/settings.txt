@@ -1,0 +1,5 @@
+SFX 5
+Music 5
+Menu_Sound 5
+Back 0
+Default

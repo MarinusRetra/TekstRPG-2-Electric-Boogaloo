@@ -8,6 +8,9 @@ namespace states
 	void SettingsState::Enter(GameContext* p_gameContext)
 	{
 		terminal_set("input.filter = [up, down, return, escape, left, right]");
+		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), p_gameContext->CurrentPrintHeight);
+
+		terminal_print_ext(1, (p_gameContext->CurrentPrintHeight / 2), p_gameContext->CurrentPrintWidth, 10, TK_ALIGN_CENTER, "Currently there are no sounds in the game so settings these does not do anything yet.");
 	}
 
 	void SettingsState::Update(GameContext* p_gameContext)
@@ -17,12 +20,12 @@ namespace states
 		
 		gamedata::Slider& _selectedSlider = gamedata::SettingsDataInstance.GetSelectedSlider(p_gameContext->Selection);
 
-		terminal_clear(); //TODO: Dont make it clear the entire screen every update.
-		p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), p_gameContext->CurrentPrintHeight);
-		terminal_clear_area(1, p_gameContext->CurrentPrintHeight/4, p_gameContext->CurrentPrintWidth, 2); // Clears the selection text.
+		terminal_clear_area(1, p_gameContext->CurrentPrintHeight/4, p_gameContext->CurrentPrintWidth, 2);
 		terminal_print_ext(1, p_gameContext->CurrentPrintHeight/4, p_gameContext->CurrentPrintWidth, 10, TK_ALIGN_CENTER, _selectedSlider.name.c_str());
 		terminal_print_ext(1, (p_gameContext->CurrentPrintHeight/4)+1, p_gameContext->CurrentPrintWidth, 10, TK_ALIGN_CENTER,  (_selectedSlider.value == 0) ? "" : std::to_string(_selectedSlider.value).c_str());
+		
 		PrintMenu();
+
 		terminal_refresh();
 
 		p_gameContext->Key = terminal_read();

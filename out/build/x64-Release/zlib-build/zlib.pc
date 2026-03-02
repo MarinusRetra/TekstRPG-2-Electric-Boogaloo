@@ -1,0 +1,13 @@
+prefix=E:/Projects/TekstRPG-2-Electric-Boogaloo/out/install/x64-Release
+exec_prefix=E:/Projects/TekstRPG-2-Electric-Boogaloo/out/install/x64-Release
+libdir=E:/Projects/TekstRPG-2-Electric-Boogaloo/out/install/x64-Release/lib
+sharedlibdir=E:/Projects/TekstRPG-2-Electric-Boogaloo/out/install/x64-Release/lib
+includedir=E:/Projects/TekstRPG-2-Electric-Boogaloo/out/install/x64-Release/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.3.1
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

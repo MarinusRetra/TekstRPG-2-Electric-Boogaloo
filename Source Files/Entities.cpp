@@ -1,11 +1,10 @@
 #include "Header Files/Entities.h"
 
-
 namespace entities
 {
-	Entity::Entity(xp::RexTile _characterIn, std::string _nameIn, int _attackIn, int _mAttackIn, int _agilityIn, int _defenseIn, int _mDefenseIn, int _maxHealtIn) : BaseEntity(_nameIn, _attackIn, _mAttackIn, _agilityIn, _defenseIn, _mDefenseIn, _maxHealtIn)
+	Entity::Entity(xp::RexTile _characterIn, std::string _nameIn, int _attackIn, int _mAttackIn, int _agilityIn, int _defenseIn, int _mDefenseIn, int _maxHealtIn, sprites::EntityCharacters _spriteDataIn, int _spawnPosXIn, int _spawnPosYIn) : BaseEntity(_nameIn, _attackIn, _mAttackIn, _agilityIn, _defenseIn, _mDefenseIn, _maxHealtIn), SpriteData(_spriteDataIn)
 	{
-		PositionX = SpawnPositions[0].first;
-		PositionY = SpawnPositions[0].second;
+		SpawnPosition.X = _spawnPosXIn;
+		SpawnPosition.Y = _spawnPosYIn;
 	}
 }

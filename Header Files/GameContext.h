@@ -1,17 +1,19 @@
 #ifndef GAMECONTEXT_H
 #define GAMECONTEXT_H
 
-#include "Header Files/StateMachine.h"
+#include "StateMachine.h"
 #include "Themes.h"
-#include "REXSpeeder.h"
 #include "Entities.h"
+#include <REXSpeeder.h>
 
 namespace context
 {
+	const int NUM_PLAYER_CHOICES = 4;
+
 	class GameContext 
 	{
 	public:
-		xp::RexImage currentMap;
+		xp::RexImage CurrentMap;
 
 		StateMachine<GameContext> m_StateMachine;
 
@@ -22,7 +24,8 @@ namespace context
 		int Selection = 0;
 		int Key = 0;
 		
-		entities::Entity Player;
+		entities::Entity playerChoices[NUM_PLAYER_CHOICES];
+		entities::Entity Player = playerChoices[0];
 			
 		// This is so i don't have to include gamecontext when i want to get current theme and so I don't need themes when I already have gamecontext.
 		themes::Theme& GetCurrentTheme();
@@ -40,10 +43,10 @@ namespace context
 		void PrintBorder(int Symbol1, int Symbol2, int w, int h);
 	
 		void CheckGameClose();
+
 	};
 
-	static enum MapLayers { UI, MAP_VISUAL, MAP_COLLISION, MAP_INTERACTABLES, NUM_LAYERS };
-
+	enum MapLayers { UI, MAP_VISUAL, MAP_COLLISION, MAP_INTERACTABLES, NUM_LAYERS };
 }
 
 #endif

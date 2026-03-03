@@ -131,7 +131,8 @@
 				11,
 				12,
 				13,
-				14
+				14,
+				15
 			]
 		}
 	],
@@ -208,14 +209,14 @@
 				11,
 				12,
 				13,
-				14
+				14,
+				15
 			]
 		},
 		{
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
-				15,
 				16,
 				17,
 				18,
@@ -232,7 +233,9 @@
 				29,
 				30,
 				31,
-				32
+				32,
+				33,
+				34
 			]
 		}
 	],
@@ -260,6 +263,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "Source Files/Entities.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Source Files/EntitySprites.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -356,6 +365,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "Header Files/Entities.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Header Files/EntitySprites.h",
 			"sourceGroupIndex" : 1
 		},
 		{

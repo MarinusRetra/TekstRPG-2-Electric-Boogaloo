@@ -1,21 +1,16 @@
 
 #include "Header Files/CharacterSelectionState.h"
 #include "Header Files/Entities.h"
-#include <BearLibTerminal.h>
+#include "Header Files/ExplorationState.h"
+#include "Header Files/EntitySprites.h"
 #include <string>
-#include <Header Files/ExplorationState.h>
+#include <BearLibTerminal.h>
+
 
 using namespace context;
 
 namespace states
 {
-    entities::Entity playerChoices[NUM_PLAYER_CHOICES] = {
-        { { 30, 255, 255, 255, 255, 255, 255 }, "Daan", 15, 10, 5, 10, 10, 80 },
-        { { 30, 255, 255, 255, 255, 255, 255 }, "Me'as", 15, 10, 5, 10, 10, 80 },
-        { { 30, 255, 255, 255, 255, 255, 255 }, "Lorkeith", 15, 10, 5, 10, 10, 80 },
-        { { 30, 255, 255, 255, 255, 255, 255 }, "Soduien", 15, 10, 5, 10, 10, 80 },
-    };
-
     void CharacterSelectionState::Enter(GameContext* p_gameContext)
     {
         terminal_set("input.filter = [up, down, return, backspace, escape]");
@@ -24,9 +19,9 @@ namespace states
     void CharacterSelectionState::Update(GameContext* p_gameContext)
     {
         p_gameContext->PrintBorder(p_gameContext->GetCurrentTheme().BorderSymbol1, p_gameContext->GetCurrentTheme().BorderSymbol2, terminal_state(TK_WIDTH), p_gameContext->CurrentPrintHeight);
-        PrintPlayers();
+        PrintPlayers(p_gameContext);
         terminal_clear_area(1, p_gameContext->CurrentPrintHeight / 4, p_gameContext->CurrentPrintWidth, 1);
-        terminal_print_ext(1, p_gameContext->CurrentPrintHeight / 4, p_gameContext->CurrentPrintWidth, 1, TK_ALIGN_CENTER, playerChoices[p_gameContext->Selection].Name.c_str());
+        terminal_print_ext(1, p_gameContext->CurrentPrintHeight / 4, p_gameContext->CurrentPrintWidth, 1, TK_ALIGN_CENTER, p_gameContext->playerChoices[p_gameContext->Selection].Name.c_str());
         terminal_refresh();
 
         p_gameContext->Key = terminal_read();
@@ -37,7 +32,7 @@ namespace states
             do
             {
                 terminal_clear();
-                terminal_print_ext(1, (p_gameContext->CurrentPrintHeight / 4) - 1, p_gameContext->CurrentPrintWidth, 1, TK_ALIGN_CENTER, ("Are you sure you want to play as " + playerChoices[p_gameContext->Selection].Name + "?").c_str());
+                terminal_print_ext(1, (p_gameContext->CurrentPrintHeight / 4) - 1, p_gameContext->CurrentPrintWidth, 1, TK_ALIGN_CENTER, ("Are you sure you want to play as " + p_gameContext->playerChoices[p_gameContext->Selection].Name + "?").c_str());
                 terminal_print_ext(1, p_gameContext->CurrentPrintHeight / 4, p_gameContext->CurrentPrintWidth, 4, TK_ALIGN_CENTER, "\nYes(Return)\nNo(Backspace)");
                 terminal_refresh();
                 p_gameContext->Key = terminal_read();
@@ -47,7 +42,7 @@ namespace states
             
             if (p_gameContext->Key == TK_RETURN)
             {
-                p_gameContext->Player = playerChoices[p_gameContext->Selection];
+                p_gameContext->Player = p_gameContext->playerChoices[p_gameContext->Selection];
                 p_gameContext->m_StateMachine.ChangeState(p_gameContext, &ExplorationStateInstance);
             }
             else
@@ -65,11 +60,11 @@ namespace states
         terminal_clear();
     }
 
-    void CharacterSelectionState::PrintPlayers() const
+    void CharacterSelectionState::PrintPlayers(GameContext* p_gameContext) const
     {
         for (int i = 0; i < NUM_PLAYER_CHOICES; i++)
         {
-            terminal_print_ext(1, i + 2, terminal_state(TK_WIDTH) - 10, 5, TK_ALIGN_CENTER, playerChoices[i].Name.c_str());
+            terminal_print_ext(1, i + 2, terminal_state(TK_WIDTH) - 10, 5, TK_ALIGN_CENTER, p_gameContext->playerChoices[i].Name.c_str());
         }
     }
 

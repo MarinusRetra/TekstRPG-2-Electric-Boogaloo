@@ -1,28 +1,32 @@
 #ifndef ENTITY_H
 #define ENTITY_H
+
 #include "BaseEntity.h"
-#include <REXSpeeder.h>
+#include "EntitySprites.h"
+
 #include <string>
 #include <vector>
 #include <utility>
+#include <REXSpeeder.h>
 
 /// <summary>
 /// This namespace includes OverWorldEntity, CombatEntity, InteractableEntities.
 /// </summary>
 namespace entities
 {
+
 	class Entity : public base_entity::BaseEntity
 	{
 	public:
-		Entity(xp::RexTile _characterIn, std::string _nameIn, int _attackIn, int _mAttackIn, int _agilityIn, int _defenseIn, int _mDefenseIn, int _maxHealtIn);
+		Entity(xp::RexTile _characterIn, std::string _nameIn, int _attackIn, int _mAttackIn, int _agilityIn, int _defenseIn, int _mDefenseIn, int _maxHealtIn, sprites::EntityCharacters _spriteDataIn, int _spawnPosXIn,int _spawnPosYIn);
 
-		std::vector<std::pair<int, int>> SpawnPositions = { {0,0} };
+		game_utility::Vector2<int> CurrentFacingTile = { SpawnPosition.X, SpawnPosition.Y};
 
-		int PositionX = 0;
-		int PositionY = 0;
+		sprites::EntityCharacters SpriteData;
 
-		xp::RexTile CurrentFacingTile = { 0, 0, 0, 0, 255, 0, 255 }; // TODO: Change this later to use my tile class instead for interactions and such. 
-		xp::RexTile Character = { 30, 255, 255, 255, 255, 255, 255 };
+		game_utility::Vector2<int> CurrentPosition = {0,0};
+		game_utility::Vector2<int> PreviousPosition = {0,0};
+		game_utility::Vector2<int> SpawnPosition = {0,0};
 	};
 
 	class OverWorldEntity : public Entity
@@ -43,10 +47,5 @@ namespace entities
 	{
 
 	};
-
-
-
-
-
 }
 #endif

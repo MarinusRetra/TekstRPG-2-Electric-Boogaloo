@@ -1,9 +1,10 @@
-#include <BearLibTerminal.h>
 #include "Header Files/GameContext.h"
 #include "Header Files/EnemyContext.h"
 #include "Header Files/MenuState.h"
 #include "Header Files/Themes.h"
 #include "Header Files/SettingData.h"
+#include "Header Files/EntitySprites.h"
+#include <BearLibTerminal.h>
 #include <iostream>
 
 using namespace context;
@@ -16,7 +17,7 @@ int main() {
 
     terminal_open();
 
-    EnemyContext EnemyContext; // Will probably move this somewhere else later.
+    EnemyContext EnemyContext; // Move this somewhere else later.
     GameContext GameContext;
 
     GameContext.SwapFontAndLayer(context::UI);

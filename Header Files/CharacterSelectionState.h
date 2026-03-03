@@ -8,9 +8,6 @@ using namespace context;
 
 namespace states
 {
-	// This is declared outside the class so I can use this inside a switch statement for player selection.
-	const int NUM_PLAYER_CHOICES = 4; 
-
 	class CharacterSelectionState : public IState<GameContext>
 	{
 
@@ -21,7 +18,7 @@ namespace states
 
 		void Exit(GameContext* p_gameContext) override;
 	private:
-		void PrintPlayers() const;
+		void PrintPlayers(GameContext* p_gameContext) const;
 	};
 
 	extern CharacterSelectionState CharacterSelectionStateInstance;

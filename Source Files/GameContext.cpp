@@ -1,5 +1,6 @@
-#include "BearLibTerminal.h"
 #include "Header Files/GameContext.h"
+#include "Header Files/EntitySprites.h"
+#include <BearLibTerminal.h>
 
 namespace context
 {
@@ -39,12 +40,12 @@ namespace context
 		case (MAP_VISUAL):
 			terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
 			break;
-		case (MAP_COLLISION):
-			terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
-			break;
-		case (MAP_INTERACTABLES): //MAP_INTERACTABLES Might become something different later, not sure how to implement it yet.
-			terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
-			break;
+		//case (MAP_COLLISION):
+		//	terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
+		//	break;
+		//case (MAP_INTERACTABLES): //MAP_INTERACTABLES Might become something different later, not sure how to implement it yet.
+		//	terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
+		//	break;
 		default:
 			break;
 		}
@@ -63,8 +64,18 @@ namespace context
 		}
 	}
 
-	GameContext::GameContext() : 
-		currentMap("Maps/OverWorld1.xp"), 
-		Player({ 30, 255, 255, 255, 255, 255, 255 }, "Daan", 15, 10, 5, 10, 10, 80) 
-		{}
+	// Initialize playerChoices and the current map before the constructor body runs.
+	GameContext::GameContext() : CurrentMap("Maps/OverWorld1.xp"), 
+		playerChoices{
+			{ { 30, 255, 255, 255, 255, 255, 255 }, "Daan", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
+			{ { 30, 255, 255, 255, 255, 255, 255 }, "Me'as", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
+			{ { 30, 255, 255, 255, 255, 255, 255 }, "Lorkeith", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
+			{ { 30, 255, 255, 255, 255, 255, 255 }, "Soduien", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
+		}
+	//Constructor body.
+	{
+
+		Player = playerChoices[0];
+	}
+
 }

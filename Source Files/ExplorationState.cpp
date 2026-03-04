@@ -8,8 +8,8 @@ using namespace context;
 namespace states
 {
     ExplorationState ExplorationStateInstance;
-
     game_utility::Vector2<int> currentDirection;
+
 
     void ExplorationState::Enter(GameContext* p_gameContext)
     {
@@ -18,6 +18,7 @@ namespace states
         SpawnEntity(p_gameContext, p_gameContext->Player);
         terminal_refresh();
     }
+
     
     void ExplorationState::Update(GameContext* p_gameContext)
     {
@@ -43,7 +44,10 @@ namespace states
         }
 
         FaceDirection(p_gameContext->Player, currentDirection);
-        if (p_gameContext->Player.CurrentFacingTile.IsInBounds({ 0,0 }, { terminal_state(TK_WIDTH)-1, terminal_state(TK_HEIGHT)-1 }))
+
+        //Checks if the faced tile is in the bounds of the map and if it is not a solid tile on the collision layer.
+        if (p_gameContext->Player.CurrentFacingTile.IsInBounds({ 0,0 }, { terminal_state(TK_WIDTH)-1, terminal_state(TK_HEIGHT)-1 })
+            && (xp::isTransparent(p_gameContext->CurrentMap.getTile(1, p_gameContext->Player.CurrentFacingTile.X, p_gameContext->Player.CurrentFacingTile.Y))))
         {
             MovePlayer(p_gameContext, currentDirection);
             FaceDirection(p_gameContext->Player, currentDirection);

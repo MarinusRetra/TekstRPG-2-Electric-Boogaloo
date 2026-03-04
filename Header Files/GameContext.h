@@ -46,7 +46,7 @@ namespace context
 
 	};
 
-	enum MapLayers { UI, MAP_VISUAL, MAP_COLLISION, MAP_INTERACTABLES, NUM_LAYERS };
+	enum MapLayers { UI, MAP_VISUAL, MAP_INTERACTABLES, NUM_LAYERS };
 }
 
 #endif

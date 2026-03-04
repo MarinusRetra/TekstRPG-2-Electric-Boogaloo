@@ -28,6 +28,10 @@ namespace context
 		}
 	}
 
+	/// <summary>
+	/// Dont swap layers and font when already on that font. Even if it's the same font it will 'reset' the previous layer to garbage.
+	/// </summary>
+	/// <param name="layerIn"></param>
 	void GameContext::SwapFontAndLayer(int layerIn)
 	{
 		terminal_layer(layerIn);
@@ -40,12 +44,6 @@ namespace context
 		case (MAP_VISUAL):
 			terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
 			break;
-		//case (MAP_COLLISION):
-		//	terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
-		//	break;
-		//case (MAP_INTERACTABLES): //MAP_INTERACTABLES Might become something different later, not sure how to implement it yet.
-		//	terminal_set("font: Fonts/Monochrome_ReReRePacked.png, size=16x16, layout=16x352, codepage=Fonts/Monochrome_ReReRePacked_codepage.txt");
-		//	break;
 		default:
 			break;
 		}

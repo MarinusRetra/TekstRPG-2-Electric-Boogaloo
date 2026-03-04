@@ -42,6 +42,17 @@ namespace game_utility
 				return X > other.X;
 			return Y > other.Y;
 		}
+
+		bool operator!=(const Vector2& other) const
+		{
+			return X != other.X || Y != other.Y;
+		}
+
+		bool IsInBounds(Vector2 minBound, Vector2 maxBound) const
+		{
+			return X >= minBound.X && X <= maxBound.X && Y >= minBound.Y && Y <= maxBound.Y;
+		}
+
 	};
 
 }

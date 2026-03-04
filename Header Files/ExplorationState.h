@@ -22,6 +22,7 @@ namespace states
 	private:
 		void PrintMap(GameContext* p_gameContext, xp::RexImage&);
 		void MovePlayer(GameContext* p_gameContext, game_utility::Vector2<int> directionIn);
+		void FaceDirection(entities::Entity& entityIn, game_utility::Vector2<int> directionIn);
 		void SpawnEntity(GameContext* p_gameContext, entities::Entity& entityIn);
 		void SpawnEntity(GameContext* p_gameContext, entities::Entity& entityIn, int spawnPosXIn, int spawnPosYIn);
 	};

@@ -13,7 +13,7 @@ namespace states
 
     void ExplorationState::Enter(GameContext* p_gameContext)
     {
-        terminal_set("input.filter = [W,A,S,D, up, left, right, down, return, escape, MOUSE_RIGHT]");
+        terminal_set("input.filter = [w, a, s, d, up, left, right, down, return, escape, MOUSE_RIGHT]");
         PrintMap(p_gameContext, p_gameContext->CurrentMap);
         SpawnEntity(p_gameContext, p_gameContext->Player);
         terminal_refresh();
@@ -36,12 +36,18 @@ namespace states
         currentDirection.Y = ( (p_gameContext->Key == TK_UP || p_gameContext->Key == TK_W) ? -1 : (p_gameContext->Key == TK_DOWN || p_gameContext->Key == TK_S) ? 1 : 0);
         currentDirection.X = ( (p_gameContext->Key == TK_LEFT || p_gameContext->Key == TK_A) ? -1 : (p_gameContext->Key == TK_RIGHT || p_gameContext->Key == TK_D) ? 1 : 0);
         
+        // For when input is something other than movement.
         if (currentDirection == game_utility::Vector2<int>{0, 0})
         {
             return;
         }
 
-        MovePlayer(p_gameContext, currentDirection);
+        FaceDirection(p_gameContext->Player, currentDirection);
+        if (p_gameContext->Player.CurrentFacingTile.IsInBounds({ 0,0 }, { terminal_state(TK_WIDTH)-1, terminal_state(TK_HEIGHT)-1 }))
+        {
+            MovePlayer(p_gameContext, currentDirection);
+            FaceDirection(p_gameContext->Player, currentDirection);
+        }
 
         terminal_refresh();
     }
@@ -84,38 +90,28 @@ namespace states
         terminal_refresh();
     }
 
-
     void ExplorationState::MovePlayer(GameContext* p_gameContext, game_utility::Vector2<int> directionIn)
     {
-        //Make the player sprite face the same direction as the player input.
-        auto newSprite = p_gameContext->Player.SpriteData.CharacterSprites.find(directionIn);
-        if (newSprite != p_gameContext->Player.SpriteData.CharacterSprites.end())
-        {
-          terminal_put(p_gameContext->Player.CurrentPosition.X, p_gameContext->Player.CurrentPosition.Y, 0xE000 + game_utility::ConvertTileToUint32(*newSprite->second));
-        }
-
-        int newX = p_gameContext->Player.CurrentPosition.X + directionIn.X;
-        int newY = p_gameContext->Player.CurrentPosition.Y + directionIn.Y;
-
-        if (newX < 0 || newX >= terminal_state(TK_WIDTH))
-        {
-            return;
-        }
-        else if (newY < 0 || newY >= terminal_state(TK_HEIGHT))
-        {
-            return;
-        }
         p_gameContext->SwapFontAndLayer(context::MAP_INTERACTABLES);
-        terminal_color(color_from_argb(255, newSprite->second->fore_red, newSprite->second->fore_green, newSprite->second->fore_blue));
-        
+       
         p_gameContext->Player.PreviousPosition = p_gameContext->Player.CurrentPosition;
         p_gameContext->Player.CurrentPosition += directionIn;
 
-        //Make the player sprite face the same direction as the player input.
-        if (newSprite != p_gameContext->Player.SpriteData.CharacterSprites.end())
+        if (p_gameContext->Player.CurrentPosition != p_gameContext->Player.PreviousPosition)
         {
-            terminal_put(p_gameContext->Player.CurrentPosition.X, p_gameContext->Player.CurrentPosition.Y, 0xE000 + game_utility::ConvertTileToUint32(*newSprite->second));
             terminal_clear_area(p_gameContext->Player.PreviousPosition.X, p_gameContext->Player.PreviousPosition.Y, 1, 1);
+        }
+    }
+
+    void ExplorationState::FaceDirection(entities::Entity& entityIn, game_utility::Vector2<int> directionIn)
+    {
+        auto newSprite = entityIn.SpriteData.CharacterSprites.find(directionIn);
+        
+        if (newSprite != entityIn.SpriteData.CharacterSprites.end())
+        {
+            terminal_color(color_from_argb(255, newSprite->second->fore_red, newSprite->second->fore_green, newSprite->second->fore_blue));
+            terminal_put(entityIn.CurrentPosition.X, entityIn.CurrentPosition.Y, 0xE000 + game_utility::ConvertTileToUint32(*newSprite->second));
+            entityIn.CurrentFacingTile = entityIn.CurrentPosition + directionIn;
         }
     }
 

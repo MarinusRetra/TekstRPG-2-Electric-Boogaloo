@@ -1,12 +1,8 @@
 #include "Header Files/BaseEntity.h"
 #include "Header Files/StatusEffects.h"
-#include <iostream>
-#include <random>
-#include <ctime>
 
 namespace base_entity
 {
-
 	BaseEntity::BaseEntity(std::string _nameIn, int _attackIn, int _mAttackIn, int _agilityIn, int _defenseIn, int _mDefenseIn, int _maxHealtIn)
 	{
 		Name = _nameIn;
@@ -58,5 +54,5 @@ namespace base_entity
 	/// <summary>
 	/// Keeps a list of every status this entity can get.
 	/// </summary>
-	status::StatusEffect StatusEffectsVulnerable[MAX_STATUS_EFFECTS];
+	status::StatusEffect StatusEffectsVulnerable[base_entity::BaseEntity::MAX_STATUS_EFFECTS];
 }

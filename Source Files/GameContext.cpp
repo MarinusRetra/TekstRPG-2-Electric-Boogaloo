@@ -27,7 +27,6 @@ namespace context
 			terminal_put(w - 1, y, y % 2 ? Symbol1 : Symbol2);
 		}
 	}
-
 	/// <summary>
 	/// Dont swap layers and font when already on that font. Even if it's the same font it will 'reset' the previous layer to garbage.
 	/// </summary>
@@ -65,10 +64,10 @@ namespace context
 	// Initialize playerChoices and the current map before the constructor body runs.
 	GameContext::GameContext() : CurrentMap("Maps/OverWorld1.xp"), 
 		playerChoices{
-			{ { 30, 255, 255, 255, 255, 255, 255 }, "Daan", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
-			{ { 30, 255, 255, 255, 255, 255, 255 }, "Me'as", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
-			{ { 30, 255, 255, 255, 255, 255, 255 }, "Lorkeith", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
-			{ { 30, 255, 255, 255, 255, 255, 255 }, "Soduien", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
+			{ "Daan", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
+			{ "Me'as", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
+			{ "Lorkeith", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
+			{ "Soduien", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
 		}
 	//Constructor body.
 	{

@@ -5,7 +5,7 @@
 
 namespace game_utility
 {
-	uint32_t ConvertTileToUint32(xp::RexTile tile);
+	uint32_t ConvertTileToTileIndex(xp::RexTile tile);
 
 	template<typename TypeOfNumber>
 	struct Vector2

@@ -63,6 +63,7 @@ namespace states
         terminal_refresh();
     }
 
+    //TODO: Move this to the map_data namespace and print it there using the new map struct.
     void ExplorationState::PrintMap(GameContext* p_gameContext, xp::RexImage& mapIn)
     {
         p_gameContext->SwapFontAndLayer(context::MAP_VISUAL);
@@ -83,10 +84,8 @@ namespace states
                     terminal_color(currentColor);
                     previousTileFore = currentColor;
                 }
-
-                uint32_t tileIndex = game_utility::ConvertTileToUint32(tile);
-
-                terminal_put(x, y, 0xE000 + tileIndex);
+                
+                terminal_put(x, y, 0xE000 + game_utility::ConvertTileToTileIndex(tile));
             }
         }
 
@@ -114,7 +113,7 @@ namespace states
         if (newSprite != entityIn.SpriteData.CharacterSprites.end())
         {
             terminal_color(color_from_argb(255, newSprite->second->fore_red, newSprite->second->fore_green, newSprite->second->fore_blue));
-            terminal_put(entityIn.CurrentPosition.X, entityIn.CurrentPosition.Y, 0xE000 + game_utility::ConvertTileToUint32(*newSprite->second));
+            terminal_put(entityIn.CurrentPosition.X, entityIn.CurrentPosition.Y, 0xE000 + game_utility::ConvertTileToTileIndex(*newSprite->second));
             entityIn.CurrentFacingTile = entityIn.CurrentPosition + directionIn;
         }
     }
@@ -130,7 +129,7 @@ namespace states
        
         entityIn.CurrentPosition = entityIn.SpawnPosition;
 
-        terminal_put(entityIn.SpawnPosition.X, entityIn.SpawnPosition.Y, 0xE000 + game_utility::ConvertTileToUint32(*p_gameContext->Player.SpriteData.CombatCharacter));
+        terminal_put(entityIn.SpawnPosition.X, entityIn.SpawnPosition.Y, 0xE000 + game_utility::ConvertTileToTileIndex(*p_gameContext->Player.SpriteData.CombatCharacter));
     }
 
     /// <summary>
@@ -141,10 +140,6 @@ namespace states
         p_gameContext->SwapFontAndLayer(context::MAP_INTERACTABLES);
         terminal_color(color_from_argb(255, entityIn.SpriteData.OverworldCharacterDown->fore_red, entityIn.SpriteData.OverworldCharacterDown->fore_green, entityIn.SpriteData.OverworldCharacterDown->fore_blue));
 
-        terminal_put(spawnPosXIn, spawnPosYIn, 0xE000 + game_utility::ConvertTileToUint32(*p_gameContext->Player.SpriteData.CombatCharacter));
+        terminal_put(spawnPosXIn, spawnPosYIn, 0xE000 + game_utility::ConvertTileToTileIndex(*p_gameContext->Player.SpriteData.CombatCharacter));
     }
-
-
-
-
 }

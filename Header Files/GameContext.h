@@ -34,7 +34,7 @@ namespace context
 
 		void SwapFontAndLayer(int layerIn);
 
-		//Sets the theme, reprints the border and refreshes the terminal.
+		// Sets the theme, reprints the border and refreshes the terminal.
 		void SetTheme(color_t textColor, color_t backgroundColor, int BorderSymbol1, int BorderSymbol2);
 	
 		/// <summary>
@@ -43,7 +43,6 @@ namespace context
 		void PrintBorder(int Symbol1, int Symbol2, int w, int h);
 	
 		void CheckGameClose();
-
 	};
 
 	enum MapLayers { UI, MAP_VISUAL, MAP_INTERACTABLES, NUM_LAYERS };

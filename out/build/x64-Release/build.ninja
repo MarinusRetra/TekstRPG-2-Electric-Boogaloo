@@ -148,6 +148,14 @@ build CMakeFiles\Dude.dir\Source_Files\GameUtility.cpp.obj: CXX_COMPILER__Dude_u
   TARGET_COMPILE_PDB = CMakeFiles\Dude.dir\
   TARGET_PDB = Dude.pdb
 
+build CMakeFiles\Dude.dir\Source_Files\Map.cpp.obj: CXX_COMPILER__Dude_unscanned_Release E$:\Projects\TekstRPG-2-Electric-Boogaloo\Source$ Files\Map.cpp || cmake_object_order_depends_target_Dude
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
+  INCLUDES = -IE:\Projects\Librarby\BearLibTerminal\Include\C -IE:\Projects\Librarby\REXSpeeder\include -IE:\Projects\TekstRPG-2-Electric-Boogaloo -IE:\Projects\TekstRPG-2-Electric-Boogaloo\Header -IE:\Projects\TekstRPG-2-Electric-Boogaloo\Files -IE:\Projects\TekstRPG-2-Electric-Boogaloo\out\build\x64-Release\zlib-build -IE:\Projects\Librarby\ZLIB
+  OBJECT_DIR = CMakeFiles\Dude.dir
+  OBJECT_FILE_DIR = CMakeFiles\Dude.dir\Source_Files
+  TARGET_COMPILE_PDB = CMakeFiles\Dude.dir\
+  TARGET_PDB = Dude.pdb
+
 build CMakeFiles\Dude.dir\Source_Files\MenuState.cpp.obj: CXX_COMPILER__Dude_unscanned_Release E$:\Projects\TekstRPG-2-Electric-Boogaloo\Source$ Files\MenuState.cpp || cmake_object_order_depends_target_Dude
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17
   INCLUDES = -IE:\Projects\Librarby\BearLibTerminal\Include\C -IE:\Projects\Librarby\REXSpeeder\include -IE:\Projects\TekstRPG-2-Electric-Boogaloo -IE:\Projects\TekstRPG-2-Electric-Boogaloo\Header -IE:\Projects\TekstRPG-2-Electric-Boogaloo\Files -IE:\Projects\TekstRPG-2-Electric-Boogaloo\out\build\x64-Release\zlib-build -IE:\Projects\Librarby\ZLIB
@@ -220,7 +228,7 @@ build CMakeFiles\Dude.dir\Source_Files\main.cpp.obj: CXX_COMPILER__Dude_unscanne
 #############################################
 # Link the executable Dude.exe
 
-build Dude.exe: CXX_EXECUTABLE_LINKER__Dude_Release CMakeFiles\Dude.dir\Source_Files\BaseEntity.cpp.obj CMakeFiles\Dude.dir\Source_Files\CharacterSelectionState.cpp.obj CMakeFiles\Dude.dir\Source_Files\CombatState.cpp.obj CMakeFiles\Dude.dir\Source_Files\Entities.cpp.obj CMakeFiles\Dude.dir\Source_Files\EntitySprites.cpp.obj CMakeFiles\Dude.dir\Source_Files\ExplorationState.cpp.obj CMakeFiles\Dude.dir\Source_Files\GameContext.cpp.obj CMakeFiles\Dude.dir\Source_Files\GameUtility.cpp.obj CMakeFiles\Dude.dir\Source_Files\MenuState.cpp.obj CMakeFiles\Dude.dir\Source_Files\SetThemeState.cpp.obj CMakeFiles\Dude.dir\Source_Files\SettingData.cpp.obj CMakeFiles\Dude.dir\Source_Files\SettingsState.cpp.obj CMakeFiles\Dude.dir\Source_Files\StatusEffects.cpp.obj CMakeFiles\Dude.dir\Source_Files\Themes.cpp.obj CMakeFiles\Dude.dir\Source_Files\ViewControlsState.cpp.obj CMakeFiles\Dude.dir\Source_Files\main.cpp.obj | E$:\Projects\Librarby\BearLibTerminal\Windows64\BearLibTerminal.lib REX_LIB.lib zlib-build\zlib.lib || REX_LIB.lib zlib-build\zlib.dll
+build Dude.exe: CXX_EXECUTABLE_LINKER__Dude_Release CMakeFiles\Dude.dir\Source_Files\BaseEntity.cpp.obj CMakeFiles\Dude.dir\Source_Files\CharacterSelectionState.cpp.obj CMakeFiles\Dude.dir\Source_Files\CombatState.cpp.obj CMakeFiles\Dude.dir\Source_Files\Entities.cpp.obj CMakeFiles\Dude.dir\Source_Files\EntitySprites.cpp.obj CMakeFiles\Dude.dir\Source_Files\ExplorationState.cpp.obj CMakeFiles\Dude.dir\Source_Files\GameContext.cpp.obj CMakeFiles\Dude.dir\Source_Files\GameUtility.cpp.obj CMakeFiles\Dude.dir\Source_Files\Map.cpp.obj CMakeFiles\Dude.dir\Source_Files\MenuState.cpp.obj CMakeFiles\Dude.dir\Source_Files\SetThemeState.cpp.obj CMakeFiles\Dude.dir\Source_Files\SettingData.cpp.obj CMakeFiles\Dude.dir\Source_Files\SettingsState.cpp.obj CMakeFiles\Dude.dir\Source_Files\StatusEffects.cpp.obj CMakeFiles\Dude.dir\Source_Files\Themes.cpp.obj CMakeFiles\Dude.dir\Source_Files\ViewControlsState.cpp.obj CMakeFiles\Dude.dir\Source_Files\main.cpp.obj | E$:\Projects\Librarby\BearLibTerminal\Windows64\BearLibTerminal.lib REX_LIB.lib zlib-build\zlib.lib || REX_LIB.lib zlib-build\zlib.dll
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG
   LINK_FLAGS = /machine:x64 /INCREMENTAL:NO /subsystem:console
   LINK_LIBRARIES = E:\Projects\Librarby\BearLibTerminal\Windows64\BearLibTerminal.lib  REX_LIB.lib  zlib-build\zlib.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib

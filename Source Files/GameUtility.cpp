@@ -3,7 +3,7 @@
 namespace game_utility
 {
 	/// <summary>
-	/// Packs 4 uint8 from a RexTile into one uint32 that it matches exactly the way .xp file stores characters. 
+	/// Packs 4 uint8 from a RexTile into one uint32 sot that it matches the way .xp files store characters. 
 	/// </summary>
 	/// <param name="tile"></param>
 	/// <returns></returns>

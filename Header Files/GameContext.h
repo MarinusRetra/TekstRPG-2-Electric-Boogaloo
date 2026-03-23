@@ -3,6 +3,7 @@
 
 #include "StateMachine.h"
 #include "Themes.h"
+#include "Map.h"
 #include "Entities.h"
 #include <REXSpeeder.h>
 
@@ -13,7 +14,7 @@ namespace context
 	class GameContext 
 	{
 	public:
-		xp::RexImage CurrentMap;
+		map_data::Map CurrentMap;
 
 		StateMachine<GameContext> m_StateMachine;
 

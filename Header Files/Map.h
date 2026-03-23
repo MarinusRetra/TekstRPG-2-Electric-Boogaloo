@@ -12,7 +12,7 @@ namespace map_data
 	// These will appear under the player.
 	struct MapTileBackground
 	{
-		uint32_t glyph;
+		uint32_t sprite;
 		color_t color;
 	};
 
@@ -21,7 +21,7 @@ namespace map_data
 	// These will appear over the player.
 	struct MapTileForeGround
 	{
-		uint32_t glyph;
+		uint32_t sprite;
 		color_t color;
 	};
 
@@ -42,13 +42,6 @@ namespace map_data
 		std::vector<std::pair<uint16_t, Interactable>> Interactables;
 		std::vector<std::pair<uint16_t, entities::Entity>> Entities;
 		std::vector<std::pair<uint16_t, MapTileForeGround>> MapTileFore;
-		
-		//I use this instead of y * width + x. This optimization is not necessary but it was fun to add.
-		// High 8 bits = y, low 8 bits = x.
-		static uint16_t EncodePos(uint8_t x, uint8_t y) { return (y << 8) | x; }
-		static uint8_t DecodePosX(uint16_t k) { return k & 0xFF; }
-		static uint8_t DecodePosY(uint16_t k) { return k >> 8; }
-
 		
 		// Returns the first position that is the same size as _posIn or higher.
 		template<typename T>

@@ -60,9 +60,10 @@ namespace context
 			GameIsRunning = false;
 		}
 	}
+	
 
 	// Initialize playerChoices and the current map before the constructor body runs.
-	GameContext::GameContext() : CurrentMap("Maps/OverWorld1.xp"), 
+	GameContext::GameContext() : CurrentMap(xp::RexImage("Maps/OverWorld1.xp")),
 		playerChoices{
 			{ "Daan", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},
 			{ "Me'as", 15, 10, 5, 10, 10, 80, sprites::TemplatePlayer, 78, 28},

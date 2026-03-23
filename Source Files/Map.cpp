@@ -1,9 +1,12 @@
 #include "Header Files/Map.h"
+#include <chrono>
 
 namespace map_data
 {
 	Map::Map(xp::RexImage& mapIn)
 	{
+		auto start = std::chrono::steady_clock::now();
+		
 		MapWidth = mapIn.getWidth()-1;
 		MapHeight = mapIn.getHeight()-1;
 
@@ -11,7 +14,7 @@ namespace map_data
 		{
 			for (int x = 0; x < MapWidth; ++x)
 			{
-				uint16_t pos = EncodePos(x, y);
+				uint16_t pos = game_utility::EncodePos(x, y);
 
 				xp::RexTile tileBackGround = *mapIn.getTile(0, x, y);
 				xp::RexTile tileCollision = *mapIn.getTile(1, x, y);
@@ -51,9 +54,11 @@ namespace map_data
 				//	MapTileForeGround tileFG{ game_utility::ConvertTileToTileIndex(tileForeground), color_from_argb(255, tileForeground.fore_red, tileForeground.fore_green, tileForeground.fore_blue) };
 				//	DangerousInsert<MapTileForeGround>(MapTileFore, pos, tileFG);
 				//}
+
 			}
 		}
+		auto end = std::chrono::steady_clock::now();
+		auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+		std::cout << "Map load time: " << duration << " microseconds\n";
 	}
-
-	Map overworld(xp::RexImage("Maps/OverWorld1.xp"));
 }

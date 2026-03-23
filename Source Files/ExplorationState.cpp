@@ -1,14 +1,15 @@
 #include "Header Files/ExplorationState.h"
 #include "Header Files/GameUtility.h"
-
 #include <BearLibTerminal.h>
 #include <string>
+#include <chrono>
+
 using namespace context;
 
 namespace states
 {
     ExplorationState ExplorationStateInstance;
-    game_utility::Vector2<int> currentDirection;
+    game_utility::Vector2<int8_t> currentDirection;
 
 
     void ExplorationState::Enter(GameContext* p_gameContext)
@@ -38,7 +39,7 @@ namespace states
         currentDirection.X = ( (p_gameContext->Key == TK_LEFT || p_gameContext->Key == TK_A) ? -1 : (p_gameContext->Key == TK_RIGHT || p_gameContext->Key == TK_D) ? 1 : 0);
         
         // For when input is something other than movement.
-        if (currentDirection == game_utility::Vector2<int>{0, 0})
+        if (currentDirection == game_utility::Vector2<int8_t> {0, 0})
         {
             return;
         }
@@ -46,8 +47,8 @@ namespace states
         FaceDirection(p_gameContext->Player, currentDirection);
 
         //Checks if the faced tile is in the bounds of the map and if it is not a solid tile on the collision layer.
-        if (p_gameContext->Player.CurrentFacingTile.IsInBounds({ 0,0 }, { terminal_state(TK_WIDTH)-1, terminal_state(TK_HEIGHT)-1 })
-            && (xp::isTransparent(p_gameContext->CurrentMap.getTile(1, p_gameContext->Player.CurrentFacingTile.X, p_gameContext->Player.CurrentFacingTile.Y))))
+        if (p_gameContext->Player.CurrentFacingTile.IsInBounds({ 0,0 }, { static_cast<int8_t>(terminal_state(TK_WIDTH) - 1), static_cast<int8_t>(terminal_state(TK_HEIGHT) - 1) } )
+    && (!p_gameContext->CurrentMap.Find(p_gameContext->CurrentMap.Collisions, game_utility::Vector2<int8_t>::GetPosFromVector(p_gameContext->Player.CurrentFacingTile))))
         {
             MovePlayer(p_gameContext, currentDirection);
             FaceDirection(p_gameContext->Player, currentDirection);
@@ -63,37 +64,50 @@ namespace states
         terminal_refresh();
     }
 
-    //TODO: Move this to the map_data namespace and print it there using the new map struct.
-    void ExplorationState::PrintMap(GameContext* p_gameContext, xp::RexImage& mapIn)
+    void ExplorationState::PrintMap(GameContext* p_gameContext, map_data::Map& mapIn)
     {
         p_gameContext->SwapFontAndLayer(context::MAP_VISUAL);
+        auto start = std::chrono::steady_clock::now();
 
-        xp::RexTile firstTile = *mapIn.getTile(0, 0, 0);
-        color_t previousTileFore = color_from_argb(255, firstTile.fore_red, firstTile.fore_green, firstTile.fore_blue);
-        terminal_color(previousTileFore);
-
-        for (int y = 0; y < mapIn.getHeight(); ++y)
+        color_t previousTileColor = {};
+        
+        // These are the tiles that render behind/under the player.
+        for (auto& [pos, tile] : mapIn.MapTileBack)
         {
-            for (int x = 0; x < mapIn.getWidth(); ++x)
-            {
-                xp::RexTile tile = *mapIn.getTile(0, x, y);
+            color_t currentColor = tile.color;
 
-                color_t currentColor = color_from_argb(255, tile.fore_red, tile.fore_green, tile.fore_blue);
-                if (previousTileFore != currentColor)
-                {
-                    terminal_color(currentColor);
-                    previousTileFore = currentColor;
-                }
-                
-                terminal_put(x, y, 0xE000 + game_utility::ConvertTileToTileIndex(tile));
+            if (previousTileColor != currentColor)
+            {
+                terminal_color(currentColor);
+                previousTileColor = currentColor;
             }
+
+            terminal_put(game_utility::DecodePosX(pos), game_utility::DecodePosY(pos), 0xE000 + tile.sprite);
         }
+
+       // These are the tiles that render in front/above of the player.
+       for (auto& [pos, tile] : mapIn.MapTileFore)
+       {
+           color_t currentColor = tile.color;
+       
+           if (previousTileColor != currentColor)
+           {
+               terminal_color(currentColor);
+               previousTileColor = currentColor;
+           }
+       
+           terminal_put(game_utility::DecodePosX(pos), game_utility::DecodePosY(pos), 0xE000 + tile.sprite);
+       }
 
         terminal_color(themes::CurrentTheme.TextColor);
         terminal_refresh();
+
+        auto end = std::chrono::steady_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+        std::cout << "Map render time: " << duration << " microseconds\n";
     }
 
-    void ExplorationState::MovePlayer(GameContext* p_gameContext, game_utility::Vector2<int> directionIn)
+    void ExplorationState::MovePlayer(GameContext* p_gameContext, game_utility::Vector2<int8_t> directionIn)
     {
         p_gameContext->SwapFontAndLayer(context::MAP_INTERACTABLES);
        
@@ -106,18 +120,17 @@ namespace states
         }
     }
 
-    void ExplorationState::FaceDirection(entities::Entity& entityIn, game_utility::Vector2<int> directionIn)
+    void ExplorationState::FaceDirection(entities::Entity& entityIn, game_utility::Vector2<int8_t> directionIn)
     {
         auto newSprite = entityIn.SpriteData.CharacterSprites.find(directionIn);
         
         if (newSprite != entityIn.SpriteData.CharacterSprites.end())
         {
-            terminal_color(color_from_argb(255, newSprite->second->fore_red, newSprite->second->fore_green, newSprite->second->fore_blue));
-            terminal_put(entityIn.CurrentPosition.X, entityIn.CurrentPosition.Y, 0xE000 + game_utility::ConvertTileToTileIndex(*newSprite->second));
+            terminal_color(newSprite->second.color);
+            terminal_put(entityIn.CurrentPosition.X, entityIn.CurrentPosition.Y, 0xE000 + newSprite->second.sprite);
             entityIn.CurrentFacingTile = entityIn.CurrentPosition + directionIn;
         }
     }
-
 
     /// <summary>
     /// This one spawns an entity at the entity's own spawnlocation.
@@ -125,11 +138,12 @@ namespace states
     void ExplorationState::SpawnEntity(GameContext* p_gameContext, entities::Entity& entityIn)
     {
         p_gameContext->SwapFontAndLayer(context::MAP_INTERACTABLES);
-        terminal_color(color_from_argb(255, entityIn.SpriteData.OverworldCharacterDown->fore_red, entityIn.SpriteData.OverworldCharacterDown->fore_green, entityIn.SpriteData.OverworldCharacterDown->fore_blue));
        
+        terminal_color(entityIn.SpriteData.OverworldCharacterDown.color);
+        
         entityIn.CurrentPosition = entityIn.SpawnPosition;
-
-        terminal_put(entityIn.SpawnPosition.X, entityIn.SpawnPosition.Y, 0xE000 + game_utility::ConvertTileToTileIndex(*p_gameContext->Player.SpriteData.CombatCharacter));
+        
+        terminal_put(entityIn.SpawnPosition.X, entityIn.SpawnPosition.Y, 0xE000 + p_gameContext->Player.SpriteData.OverworldCharacterDown.sprite);
     }
 
     /// <summary>
@@ -138,8 +152,12 @@ namespace states
     void ExplorationState::SpawnEntity(GameContext* p_gameContext, entities::Entity& entityIn, int spawnPosXIn, int spawnPosYIn)
     {
         p_gameContext->SwapFontAndLayer(context::MAP_INTERACTABLES);
-        terminal_color(color_from_argb(255, entityIn.SpriteData.OverworldCharacterDown->fore_red, entityIn.SpriteData.OverworldCharacterDown->fore_green, entityIn.SpriteData.OverworldCharacterDown->fore_blue));
+        terminal_color(entityIn.SpriteData.OverworldCharacterDown.color);
 
-        terminal_put(spawnPosXIn, spawnPosYIn, 0xE000 + game_utility::ConvertTileToTileIndex(*p_gameContext->Player.SpriteData.CombatCharacter));
+        entityIn.CurrentPosition.X = spawnPosXIn;
+        entityIn.CurrentPosition.Y = spawnPosYIn;
+
+
+        terminal_put(spawnPosXIn, spawnPosYIn, 0xE000 + p_gameContext->Player.SpriteData.OverworldCharacterDown.sprite);
     }
 }

@@ -20,7 +20,7 @@ namespace gamedata
 		{
 			std::string sliderVisual = "";
 
-			for (int i = name.size(); i < (max); i++) // This is so that all the sliders always line up without me needing to make every name the same lenght.
+			for (size_t i = name.size(); i < (max); i++) // This is so that all the sliders always line up without me needing to make every name the same lenght.
 			{
 				sliderVisual += " ";
 			}
